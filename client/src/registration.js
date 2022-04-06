@@ -8,7 +8,7 @@ export class Registration extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        console.log("Registration just mounted");
+        console.log("Registration component got mounted.");
     }
     handleChange({ target }) {
         // console.log("user is typing in input field");
@@ -33,7 +33,7 @@ export class Registration extends Component {
                 if (data.success) {
                     location.reload();
                 } else {
-                    this.setState({ error: "Something went wrong" });
+                    this.setState({ error: data.message });
                 }
             })
             .catch((err) => {
@@ -48,8 +48,9 @@ export class Registration extends Component {
             <section>
                 <h1 className="someClass">Registration</h1>
                 {this.state.error && <h2>{this.state.error}</h2>}
-                <form>
+                <form className="registrationContainer">
                     <input
+                        className="registrationInput"
                         name="first"
                         placeholder="FIRST NAME"
                         type="text"
@@ -57,6 +58,7 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                     ></input>
                     <input
+                        className="registrationInput"
                         name="last"
                         placeholder="LAST NAME"
                         type="text"
@@ -64,6 +66,7 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                     ></input>
                     <input
+                        className="registrationInput"
                         name="email"
                         placeholder="EMAIL"
                         type="email"
@@ -71,6 +74,7 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                     ></input>
                     <input
+                        className="registrationInput"
                         name="password"
                         placeholder="PASSWORD"
                         type="password"
