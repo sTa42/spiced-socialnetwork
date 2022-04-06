@@ -1,3 +1,6 @@
 body {
     background-color: ghostwhite;
 }
+.someClass {
+    font-size: 5em;
+}
