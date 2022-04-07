@@ -1,6 +1,7 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
-export class Registration extends Component {
+export default class Registration extends Component {
     constructor() {
         super();
         this.state = { error: "" };
@@ -8,7 +9,7 @@ export class Registration extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-        console.log("Registration component got mounted.");
+        console.log("Registration component got mounted");
     }
     handleChange({ target }) {
         // console.log("user is typing in input field");
@@ -48,9 +49,9 @@ export class Registration extends Component {
             <section>
                 <h1 className="someClass">Registration</h1>
                 {this.state.error && <h2>{this.state.error}</h2>}
-                <form className="registrationContainer">
+                <form className="authContainer">
                     <input
-                        className="registrationInput"
+                        className="authInput"
                         name="first"
                         placeholder="FIRST NAME"
                         type="text"
@@ -58,7 +59,7 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                     ></input>
                     <input
-                        className="registrationInput"
+                        className="authInput"
                         name="last"
                         placeholder="LAST NAME"
                         type="text"
@@ -66,7 +67,7 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                     ></input>
                     <input
-                        className="registrationInput"
+                        className="authInput"
                         name="email"
                         placeholder="EMAIL"
                         type="email"
@@ -74,7 +75,7 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                     ></input>
                     <input
-                        className="registrationInput"
+                        className="authInput"
                         name="password"
                         placeholder="PASSWORD"
                         type="password"
@@ -83,6 +84,7 @@ export class Registration extends Component {
                     ></input>
                     <button onClick={this.handleSubmit}>REGISTER</button>
                 </form>
+                <Link to="/login">ALREADY HAVE AN ACCOUNT? CLICK HERE</Link>
             </section>
         );
     }

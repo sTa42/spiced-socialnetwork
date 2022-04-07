@@ -11,3 +11,6 @@ exports.registerUser = (firstname, lastname, email, password) => {
         [firstname, lastname, email, password]
     );
 };
+exports.loginUser = (email) => {
+    return db.query(`SELECT * FROM users WHERE email=$1;`, [email]);
+};

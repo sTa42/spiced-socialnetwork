@@ -77,7 +77,48 @@ router.post("/register.json", (req, res) => {
         })
         .catch((err) => {
             console.log("error while hashing", err);
-            res.json({ success: false, message: "SOMETHING BAD HAPPENEDdddd" });
+            res.json({ success: false, message: "SOMETHING BAD HAPPENED" });
+        });
+});
+router.post("/login.json", (req, res) => {
+    console.log(req.body);
+    db.loginUser(req.body.email)
+        .then(({ rows }) => {
+            if (rows.length !== 0) {
+                return compare(req.body.password, rows[0].password)
+                    .then((isPasswordCorrect) => {
+                        if (isPasswordCorrect) {
+                            req.session.userId = rows[0].id;
+                            res.json({ success: true });
+                        } else {
+                            res.json({
+                                success: false,
+                                message: "Incorrect submitted data",
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        console.log("ERROR while comparing hashes", err);
+                        res.json({
+                            success: false,
+                            message:
+                                "Something went bad on our side. Please try again later.",
+                        });
+                    });
+            } else {
+                res.json({
+                    success: false,
+                    message: "Incorrect submitted data",
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("ERROR", err);
+            res.json({
+                success: false,
+                message:
+                    "Something went bad on our side. Please try again later.",
+            });
         });
 });
 router.post("/logout.json", (req, res) => {

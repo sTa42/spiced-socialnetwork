@@ -1,11 +1,11 @@
 body {
     background-color: blanchedalmond;
 }
-.registrationContainer {
+.authContainer {
     display: flex;
     flex-direction: column;
 }
-.registrationInput {
+.authInput {
     border: 1px solid black;
     width: 10em;
     font-size: 2em;
