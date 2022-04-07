@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, Route } from "react-router-dom";
 
 export default class Registration extends Component {
     constructor() {
@@ -33,6 +33,7 @@ export default class Registration extends Component {
                 console.log("DO SOMETHING WITH MY RESPONSE", data);
                 if (data.success) {
                     location.reload();
+                    // <Redirect to="/"></Redirect>;
                 } else {
                     this.setState({ error: data.message });
                 }

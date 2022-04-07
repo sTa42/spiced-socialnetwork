@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, Route } from "react-router-dom";
 export default class Login extends Component {
     constructor() {
         super();
@@ -25,8 +25,9 @@ export default class Login extends Component {
             .then((resp) => resp.json())
             .then((data) => {
                 if (data.success) {
-                    // <Redirect to="/" />;
                     location.reload();
+
+                    // <Redirect to="/"></Redirect>;
                 } else {
                     this.setState({ error: data.message });
                 }
@@ -62,6 +63,8 @@ export default class Login extends Component {
                     ></input>
                     <button onClick={this.handleLoginSubmit}>LOGIN</button>
                 </form>
+                <Link to="/reset">CLICK HERE IF YOU FORGOT YOUR PASSWORD</Link>
+                <br></br>
                 <Link to="/">NO ACCOUNT YET? CLICK HERE</Link>
             </section>
         );

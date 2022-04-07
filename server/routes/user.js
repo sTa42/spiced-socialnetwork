@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { hash, compare } = require("../middlewares/bc");
 const db = require("../middlewares/db");
+const ses = require("../middlewares/aws-ses");
 
 router.get("/id.json", function (req, res) {
     res.json({
@@ -82,7 +83,7 @@ router.post("/register.json", (req, res) => {
 });
 router.post("/login.json", (req, res) => {
     console.log(req.body);
-    db.loginUser(req.body.email)
+    db.getUserInfoByEmail(req.body.email)
         .then(({ rows }) => {
             if (rows.length !== 0) {
                 return compare(req.body.password, rows[0].password)
@@ -120,6 +121,9 @@ router.post("/login.json", (req, res) => {
                     "Something went bad on our side. Please try again later.",
             });
         });
+});
+router.post("/resetpassword.json", (req, res) => {
+    ses.sendEmail();
 });
 router.post("/logout.json", (req, res) => {
     req.session = null;

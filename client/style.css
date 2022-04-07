@@ -1,6 +1,9 @@
 body {
     background-color: blanchedalmond;
 }
+main {
+    display: flex;
+}
 .authContainer {
     display: flex;
     flex-direction: column;
@@ -11,6 +14,13 @@ body {
     font-size: 2em;
     margin: 0.5em;
 }
+.authInput::placeholder {
+    text-align: right;
+}
 .someClass {
     font-size: 5em;
+}
+.welcomeTextContainer {
+    width: 40%;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
