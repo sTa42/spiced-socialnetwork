@@ -60,9 +60,10 @@ export default class ResetPassword extends Component {
         console.log(this.state.stage);
         if (this.state.stage === 1) {
             return (
-                <section>
+                <>
                     <form>
                         <input
+                            key={1}
                             className="authInput"
                             name="email"
                             placeholder="EMAIL"
@@ -74,13 +75,14 @@ export default class ResetPassword extends Component {
                             RESET PASSWORD
                         </button>
                     </form>
-                </section>
+                </>
             );
         } else if (this.state.stage === 2) {
             return (
-                <section>
+                <>
                     <form>
                         <input
+                            key={2}
                             className="authInput"
                             name="resetCode"
                             placeholder="RESET CODE"
@@ -89,6 +91,7 @@ export default class ResetPassword extends Component {
                             onChange={this.handleChangeResetPassword}
                         ></input>
                         <input
+                            key={3}
                             className="authInput"
                             name="password"
                             placeholder="PASSWORD"
@@ -100,18 +103,18 @@ export default class ResetPassword extends Component {
                             CHANGE PASSWORD
                         </button>
                     </form>
-                </section>
+                </>
             );
         } else if (this.state.stage === 3) {
             return (
-                <section>
+                <>
                     <p>Password Change was successfull.</p>
                     <Link to="/login">Click here to login</Link>
-                </section>
+                </>
             );
         }
     }
     render() {
-        return this.renderStage();
+        return <section>{this.renderStage()}</section>;
     }
 }

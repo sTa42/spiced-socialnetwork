@@ -107,14 +107,4 @@ router.post("/reset", (req, res) => {
             });
         });
 });
-
-router.get("/reset/test", (req, res) => {
-    insertResetCodeForEmail(
-        "Werner@Heins.com",
-        cryptoRandomString({
-            length: 6,
-        })
-    );
-});
-router.post("/reset/new", (req, res) => {});
 module.exports = router;

@@ -34,3 +34,18 @@ exports.updatePasswordForEmail = (email, password) => {
         password,
     ]);
 };
+exports.getFullNameAndProfilePictureByUserId = (userId) => {
+    return db.query(
+        `SELECT id, firstname, lastname, profilepic_url, bio FROM users WHERE id=$1;`,
+        [userId]
+    );
+};
+exports.updateUserProfileUrl = (userId, profilePicUrl) => {
+    return db.query(
+        `UPDATE users 
+        SET profilepic_url=$2 
+        WHERE id=$1
+        RETURNING profilepic_url AS url;`,
+        [userId, profilePicUrl]
+    );
+};

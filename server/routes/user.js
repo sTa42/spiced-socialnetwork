@@ -3,11 +3,22 @@ const router = express.Router();
 const { hash, compare } = require("../middlewares/bc");
 const db = require("../middlewares/db");
 const ses = require("../middlewares/aws-ses");
+const { uploader } = require("../middlewares/uploadlocal");
+const s3 = require("../middlewares/aws-s3");
 
 router.get("/id.json", function (req, res) {
     res.json({
         userId: req.session.userId,
     });
+});
+router.get("/", (req, res) => {
+    db.getFullNameAndProfilePictureByUserId(req.session.userId)
+        .then(({ rows }) => {
+            res.json({ success: true, user: rows[0] });
+        })
+        .catch((err) => {
+            console.log("ERROR WHILE FETCHING USER DATA: ", err);
+        });
 });
 router.post("/register.json", (req, res) => {
     console.log(req.body);
@@ -122,9 +133,29 @@ router.post("/login.json", (req, res) => {
             });
         });
 });
-router.post("/resetpassword.json", (req, res) => {
-    ses.sendEmail();
-});
+router.post(
+    "/uploadprofilepicture",
+    uploader.single("file"),
+    s3.upload,
+    (req, res) => {
+        if (req.file) {
+            db.updateUserProfileUrl(
+                req.session.userId,
+                `https://s3.amazonaws.com/spicedling/${req.file.filename}`
+            )
+                .then(({ rows }) => {
+                    res.json({ success: true, url: rows[0].url });
+                })
+                .catch((err) => {
+                    console.log(
+                        "SOMETHING WENT WRONG UPDATING PROFILEPIC URL IN DB",
+                        err
+                    );
+                    res.json({ success: false });
+                });
+        }
+    }
+);
 router.post("/logout.json", (req, res) => {
     req.session = null;
     res.json({ success: true });

@@ -22,11 +22,11 @@ exports.sendPasswordResetEmail = function (recipient, resetCode) {
             Message: {
                 Body: {
                     Text: {
-                        Data: `Hello, you request a password reset. Here is your code: ${resetCode}`,
+                        Data: `Hello, you requested a password reset. Here is your code: ${resetCode}.`,
                     },
                 },
                 Subject: {
-                    Data: "Your code to reset your password.",
+                    Data: "Your code to reset your password",
                 },
             },
         })

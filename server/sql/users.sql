@@ -5,5 +5,7 @@ CREATE TABLE users (
     firstname VARCHAR(255) NOT NULL CHECK (firstname != ''),
     lastname VARCHAR(255) NOT NULL CHECK (lastname != ''),
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR NOT NULL
+    profilepic_url VARCHAR,
+    password VARCHAR NOT NULL,
+    bio TEXT
 );

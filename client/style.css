@@ -17,10 +17,21 @@ main {
 .authInput::placeholder {
     text-align: right;
 }
+.authInput:focus {
+    outline: none;
+    border-color: lightblue;
+    box-shadow: 0 0 10px lightblue;
+}
+button:hover {
+    cursor: pointer;
+}
 .someClass {
     font-size: 5em;
 }
 .welcomeTextContainer {
     width: 40%;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.user:hover {
+    cursor: pointer;
 }
