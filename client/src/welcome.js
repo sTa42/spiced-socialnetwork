@@ -13,7 +13,8 @@ export default function Welcome() {
         <>
             <aside className="welcomeTextContainer">
                 <h1>WELCOME HERE</h1>
-                <p>Shitty social network</p>
+                <p>idk network</p>
+                <img src="/idk-logos.jpeg" height={100} width={100}></img>
             </aside>
             <BrowserRouter>
                 <div>

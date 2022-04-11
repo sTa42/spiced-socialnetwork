@@ -157,14 +157,16 @@ router.post(
     }
 );
 router.post("/bio", (req, res) => {
-    console.log(req.body);
+    // console.log(req.body.biodraft);
     db.updateProfileBio(req.session.userId, req.body.biodraft)
         .then(({ rows }) => {
             console.log(rows);
             res.json({ success: true, bio: rows[0].bio });
         })
-        .catch((err) => console.log(err));
-    // res.json({ success: true, message: req.body });
+        .catch((err) => {
+            console.log("ERROR WHILE POSTING BIO TO DB: ", err);
+            res.json({ success: false });
+        });
 });
 router.post("/logout.json", (req, res) => {
     req.session = null;

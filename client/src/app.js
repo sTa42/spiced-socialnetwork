@@ -62,22 +62,30 @@ export default class App extends Component {
         }
 
         return (
-            <section>
-                Hello from APP
-                <Profile user={this.state.user} updateBio={this.updateBio} />
-                <ProfilePic
-                    imgurl={this.state.user.profilepic_url}
-                    first={this.state.user.firstname}
-                    last={this.state.user.lastname}
+            <>
+                <nav className="navbar">
+                    <img src="/idk-logos.jpeg" width={100} height={100}></img>
+                    <ProfilePic
+                        imgurl={this.state.user.profilepic_url}
+                        first={this.state.user.firstname}
+                        last={this.state.user.lastname}
+                        clickHandlerShowUploader={this.clickHandlerShowUploader}
+                    />
+                </nav>
+
+                <Profile
+                    user={this.state.user}
+                    updateBio={this.updateBio}
                     clickHandlerShowUploader={this.clickHandlerShowUploader}
                 />
+
                 {this.state.showUploader && (
                     <Uploader
                         updateProfilePicture={this.updateProfilePicture}
                         clickHandlerHideUploader={this.clickHandlerHideUploader}
                     />
                 )}
-            </section>
+            </>
         );
     }
 }

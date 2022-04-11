@@ -53,32 +53,45 @@ export default class BioEditor extends Component {
     }
     render() {
         return (
-            <section style={{ border: "1px green solid" }}>
+            <section>
                 {this.state.showTextArea && (
-                    <div>
-                        <h1>TEXT AREA STUFF</h1>
-                        <form>
+                    <>
+                        <form className="bioeditor">
                             <textarea
+                                rows="5"
+                                cols="40"
+                                className="textArea"
                                 name="biodraft"
                                 onChange={this.handleBioEditorChange}
                                 value={this.state.biodraft}
                             ></textarea>
-                            <button onClick={this.handleBioEditorSubmit}>
+                            <button
+                                className="draftSave"
+                                onClick={this.handleBioEditorSubmit}
+                            >
                                 SAVE
                             </button>
                         </form>
-                    </div>
+                    </>
                 )}
                 {!this.state.showTextArea && !this.props.bio && (
                     <>
-                        <p>HELLO THERE IS NULLISH BIO</p>
-                        <button onClick={this.showTextArea}>Add a bio</button>
+                        <button
+                            className="buttonlink"
+                            onClick={this.showTextArea}
+                        >
+                            Add a bio
+                        </button>
                     </>
                 )}
                 {!this.state.showTextArea && this.props.bio && (
                     <>
                         <p>{this.props.bio}</p>
-                        <button onClick={this.showTextArea}>
+
+                        <button
+                            className="buttonlink"
+                            onClick={this.showTextArea}
+                        >
                             Edit your bio
                         </button>
                     </>
