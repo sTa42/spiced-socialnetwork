@@ -26,7 +26,8 @@ export default class Uploader extends Component {
         })
             .then((resp) => resp.json())
             .then((data) => {
-                this.props.updateProfilePicture(data.profilepic_url);
+                console.log("AWS RESPONSE", data);
+                this.props.updateProfilePicture(data.url);
             })
             .catch((err) => {
                 console.log("SOMETHING WENT WRONG", err);

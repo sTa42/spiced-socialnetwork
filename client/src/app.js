@@ -8,6 +8,11 @@ export default class App extends Component {
             showUploader: false,
             user: {},
         };
+        this.clickHandlerShowUploader =
+            this.clickHandlerShowUploader.bind(this);
+        this.clickHandlerHideUploader =
+            this.clickHandlerHideUploader.bind(this);
+        this.updateProfilePicture = this.updateProfilePicture.bind(this);
     }
     componentDidMount() {
         fetch("/user")
@@ -19,7 +24,23 @@ export default class App extends Component {
             })
             .catch((err) => console.log(err));
     }
+    componentWillUnmount() {
+        console.log(this.state);
+    }
+    clickHandlerShowUploader() {
+        this.setState({ showUploader: true });
+    }
+    clickHandlerHideUploader() {
+        this.setState({ showUploader: false });
+    }
+    updateProfilePicture(pictureUrl) {
+        this.setState({
+            user: { ...this.state.user, profilepic_url: pictureUrl },
+        });
+    }
+
     render() {
+        console.log("FROM RENDER", this.state);
         if (!this.state.user.id) {
             return (
                 <img
@@ -30,27 +51,23 @@ export default class App extends Component {
                 />
             );
         }
+
         return (
-            <>
+            <section>
+                Hello
                 <ProfilePic
                     imgurl={this.state.user.profilepic_url}
                     first={this.state.user.firstname}
                     last={this.state.user.lastname}
-                    clickHandlerShowUploader={() => {
-                        this.setState({ showUploader: true });
-                    }}
+                    clickHandlerShowUploader={this.clickHandlerShowUploader}
                 />
                 {this.state.showUploader && (
                     <Uploader
-                        updateProfilePicture={(url) => {
-                            this.setState({ user: { profilepic_url: url } });
-                        }}
-                        clickHandlerHideUploader={() => {
-                            this.setState({ showUploader: false });
-                        }}
+                        updateProfilePicture={this.updateProfilePicture}
+                        clickHandlerHideUploader={this.clickHandlerHideUploader}
                     />
                 )}
-            </>
+            </section>
         );
     }
 }
