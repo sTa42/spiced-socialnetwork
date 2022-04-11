@@ -20,6 +20,10 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+// app.use((req, res, next) => {
+//     console.log(req.body);
+//     next();
+// });
 app.use("/user", authRouter);
 app.use("/password", passwordRouter);
 

@@ -1,6 +1,8 @@
 import { Component } from "react";
 import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
+import Profile from "./profile";
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -13,6 +15,7 @@ export default class App extends Component {
         this.clickHandlerHideUploader =
             this.clickHandlerHideUploader.bind(this);
         this.updateProfilePicture = this.updateProfilePicture.bind(this);
+        this.updateBio = this.updateBio.bind(this);
     }
     componentDidMount() {
         fetch("/user")
@@ -38,6 +41,12 @@ export default class App extends Component {
             user: { ...this.state.user, profilepic_url: pictureUrl },
         });
     }
+    updateBio(newBio) {
+        console.log("BIO ARGUMENT FROM APP: ", newBio);
+        // this.setState({ user: { ...this.state.user, bio: newBio } });
+        console.log("current state: ", this.state);
+        this.setState({ user: { ...this.state.user, bio: newBio } });
+    }
 
     render() {
         console.log("FROM RENDER", this.state);
@@ -54,7 +63,8 @@ export default class App extends Component {
 
         return (
             <section>
-                Hello
+                Hello from APP
+                <Profile user={this.state.user} updateBio={this.updateBio} />
                 <ProfilePic
                     imgurl={this.state.user.profilepic_url}
                     first={this.state.user.firstname}

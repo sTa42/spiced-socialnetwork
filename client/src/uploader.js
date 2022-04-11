@@ -36,6 +36,12 @@ export default class Uploader extends Component {
     render() {
         return (
             <section style={{ border: "1px solid black" }}>
+                <img
+                    onClick={this.props.clickHandlerHideUploader}
+                    src={"/close.png"}
+                    height={50}
+                    width={50}
+                ></img>
                 <div
                     onClick={this.props.clickHandlerHideUploader}
                     style={{

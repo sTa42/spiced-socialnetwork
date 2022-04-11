@@ -49,3 +49,9 @@ exports.updateUserProfileUrl = (userId, profilePicUrl) => {
         [userId, profilePicUrl]
     );
 };
+exports.updateProfileBio = (userId, bio) => {
+    return db.query(`UPDATE users SET bio=$2 WHERE id=$1 RETURNING bio;`, [
+        userId,
+        bio,
+    ]);
+};

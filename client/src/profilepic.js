@@ -5,8 +5,8 @@ export default function ProfilePic(props) {
             src={props.imgurl || "/blank-profilepic.svg"}
             alt={`${props.first} ${props.last}`}
             onClick={props.clickHandlerShowUploader}
-            height={100}
-            width={100}
+            height={props.height || 100}
+            width={props.width || 100}
             className="user"
         />
     );

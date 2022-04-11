@@ -156,6 +156,16 @@ router.post(
         }
     }
 );
+router.post("/bio", (req, res) => {
+    console.log(req.body);
+    db.updateProfileBio(req.session.userId, req.body.biodraft)
+        .then(({ rows }) => {
+            console.log(rows);
+            res.json({ success: true, bio: rows[0].bio });
+        })
+        .catch((err) => console.log(err));
+    // res.json({ success: true, message: req.body });
+});
 router.post("/logout.json", (req, res) => {
     req.session = null;
     res.json({ success: true });
