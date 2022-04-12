@@ -2,7 +2,8 @@ import { Component } from "react";
 import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
 import Profile from "./profile";
-
+import { BrowserRouter, Route } from "react-router-dom";
+import FindPeople from "./findpeople";
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -72,13 +73,20 @@ export default class App extends Component {
                         clickHandlerShowUploader={this.clickHandlerShowUploader}
                     />
                 </nav>
-
-                <Profile
-                    user={this.state.user}
-                    updateBio={this.updateBio}
-                    clickHandlerShowUploader={this.clickHandlerShowUploader}
-                />
-
+                <BrowserRouter>
+                    <Route exact path="/">
+                        <Profile
+                            user={this.state.user}
+                            updateBio={this.updateBio}
+                            clickHandlerShowUploader={
+                                this.clickHandlerShowUploader
+                            }
+                        />
+                    </Route>
+                    <Route path="/users">
+                        <FindPeople />
+                    </Route>
+                </BrowserRouter>
                 {this.state.showUploader && (
                     <Uploader
                         updateProfilePicture={this.updateProfilePicture}

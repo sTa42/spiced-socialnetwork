@@ -58,3 +58,12 @@ exports.updateProfileBio = (userId, bio) => {
         [userId, bio]
     );
 };
+exports.getLatestUsers = () => {
+    return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 3;`);
+};
+exports.getUsersBySearch = (searchTerm) => {
+    return db.query(
+        `SELECT * FROM users WHERE firstname ILIKE $1 OR lastname ILIKE $1;`,
+        [searchTerm + "%"]
+    );
+};

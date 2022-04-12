@@ -8,6 +8,7 @@ const cookieSession = require("cookie-session");
 
 const authRouter = require("./routes/user");
 const passwordRouter = require("./routes/password");
+const usersRouter = require("./routes/users");
 
 app.use(compression());
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 // });
 app.use("/user", authRouter);
 app.use("/password", passwordRouter);
+app.use("/users", usersRouter);
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
