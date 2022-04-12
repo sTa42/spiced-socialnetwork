@@ -32,6 +32,9 @@ export default class Uploader extends Component {
                 this.props.clickHandlerHideUploader();
             })
             .catch((err) => {
+                this.setState({
+                    err: "Something went wrong uploading your picture, maybe try one with a smaller file size.",
+                });
                 console.log("SOMETHING WENT WRONG", err);
             });
     }
@@ -46,8 +49,12 @@ export default class Uploader extends Component {
                     width={50}
                 ></img>
                 <section className="pictureuploadmodal">
-                    <p>Do you want to change your profile picture?</p>
-                    <form>
+                    {!this.state.err && (
+                        <p>Do you want to change your profile picture?</p>
+                    )}
+                    {this.state.err && <p>{this.state.err}</p>}
+
+                    <form onSubmit={this.handleUploadProfilePictureSubmit}>
                         <input
                             className="file"
                             onChange={this.handleFileSelectForUploadPicture}

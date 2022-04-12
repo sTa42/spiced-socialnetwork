@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 body {
     background-color: blanchedalmond;
@@ -38,9 +39,6 @@ button:hover {
     width: 40%;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
-.user:hover {
-    cursor: pointer;
-}
 .navbar {
     justify-content: space-between;
     display: flex;
@@ -51,8 +49,10 @@ button:hover {
 }
 .profilepic {
     border-radius: 50%;
+    object-fit: cover;
 }
 .profilepic:hover {
+    cursor: pointer;
     outline: none;
     border-color: lightblue;
     box-shadow: 0 0 10px lightblue;
@@ -71,13 +71,18 @@ button:hover {
 }
 .pictureuploadmodal {
     width: 20em;
-    height: 10em;
+    height: 12em;
     border: 1px solid black;
     background-color: blanchedalmond;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.pictureuploadmodal p {
+    text-align: center;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
 }
 .pictureuploadmodal form {
     display: flex;
@@ -87,8 +92,6 @@ button:hover {
 }
 
 .profile-container {
-    margin-left: 100px;
-    margin-right: 100px;
     display: flex;
 }
 
@@ -168,4 +171,64 @@ button:hover {
 .test {
     overflow-wrap: break-word;
     overflow: hidden;
+}
+.navlink {
+    font-size: 1.5em;
+    text-decoration: none;
+    margin: 0.5em;
+    color: black;
+}
+.navlink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.content {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.findpeople-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.foundpeople-container {
+    margin-top: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 2em;
+}
+
+.user-listing {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 15em;
+}
+.user-listing img {
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.5em;
+}
+.user-listing p {
+    font-size: 1.5em;
+}
+
+.genericInput {
+    border: 1px solid black;
+    height: 1.5em;
+}
+.genericInput::placeholder {
+    text-align: right;
+}
+.genericInput:focus {
+    outline: none;
+    border-color: lightblue;
+    box-shadow: 0 0 10px lightblue;
+}
+.listing-img {
+    height: 150px;
+    width: 150px;
 }

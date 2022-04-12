@@ -2,8 +2,15 @@ import { Component } from "react";
 import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
 import Profile from "./profile";
-import { BrowserRouter, Route } from "react-router-dom";
+import {
+    BrowserRouter,
+    Route,
+    Link,
+    Redirect,
+    NavLink,
+} from "react-router-dom";
 import FindPeople from "./findpeople";
+import Logout from "./logout";
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -64,35 +71,54 @@ export default class App extends Component {
 
         return (
             <>
-                <nav className="navbar">
-                    <img src="/idk-logos.jpeg" width={100} height={100}></img>
-                    <ProfilePic
-                        imgurl={this.state.user.profilepic_url}
-                        first={this.state.user.firstname}
-                        last={this.state.user.lastname}
-                        clickHandlerShowUploader={this.clickHandlerShowUploader}
-                    />
-                </nav>
                 <BrowserRouter>
-                    <Route exact path="/">
-                        <Profile
-                            user={this.state.user}
-                            updateBio={this.updateBio}
+                    <nav className="navbar">
+                        <img
+                            src="/idk-logos.jpeg"
+                            width={100}
+                            height={100}
+                        ></img>
+                        <div className="nav-links">
+                            <Link to="/" className="navlink">
+                                HOME
+                            </Link>
+                            <Link to="/users" className="navlink">
+                                FIND PEOPLE
+                            </Link>
+                            <Logout />
+                        </div>
+                        <ProfilePic
+                            imgurl={this.state.user.profilepic_url}
+                            first={this.state.user.firstname}
+                            last={this.state.user.lastname}
                             clickHandlerShowUploader={
                                 this.clickHandlerShowUploader
                             }
                         />
-                    </Route>
-                    <Route path="/users">
-                        <FindPeople />
-                    </Route>
+                    </nav>
+                    <section className="content">
+                        <Route exact path="/">
+                            <Profile
+                                user={this.state.user}
+                                updateBio={this.updateBio}
+                                clickHandlerShowUploader={
+                                    this.clickHandlerShowUploader
+                                }
+                            />
+                        </Route>
+                        <Route path="/users">
+                            <FindPeople />
+                        </Route>
+                        {this.state.showUploader && (
+                            <Uploader
+                                updateProfilePicture={this.updateProfilePicture}
+                                clickHandlerHideUploader={
+                                    this.clickHandlerHideUploader
+                                }
+                            />
+                        )}
+                    </section>
                 </BrowserRouter>
-                {this.state.showUploader && (
-                    <Uploader
-                        updateProfilePicture={this.updateProfilePicture}
-                        clickHandlerHideUploader={this.clickHandlerHideUploader}
-                    />
-                )}
             </>
         );
     }

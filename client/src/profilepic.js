@@ -7,7 +7,7 @@ export default function ProfilePic(props) {
             onClick={props.clickHandlerShowUploader}
             height={props.height || 100}
             width={props.width || 100}
-            className="user profilepic"
+            className="userpic profilepic"
         />
     );
 }

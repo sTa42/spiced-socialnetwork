@@ -29,28 +29,37 @@ export default function FindPeople(props) {
                 });
         }
         return () => {
+            console.log(new Date(), " : ", search);
             abort = true;
         };
     }, [search]);
 
     return (
-        <section>
+        <section className="findpeople-container">
             <h1>FIND PEOPLE</h1>
             <input
+                className="genericInput"
+                placeholder="Search by name"
                 onChange={(e) => {
                     setSearch(e.target.value);
                 }}
             ></input>
-            <div className="findpeople-container">
+            <div className="foundpeople-container">
                 {users.map((user) => {
                     return (
-                        <div key={user.id}>
+                        <div className="user-listing" key={user.id}>
                             <img
-                                src={user.profilepic_url}
-                                height={100}
-                                width={100}
+                                className="listing-img"
+                                src={
+                                    user.profilepic_url ||
+                                    "/blank-profilepic.svg"
+                                }
+                                height={150}
+                                width={150}
                             ></img>
-                            {user.firstname} {user.lastname}
+                            <p>
+                                {user.firstname} {user.lastname}
+                            </p>
                         </div>
                     );
                 })}
