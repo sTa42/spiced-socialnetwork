@@ -10,17 +10,17 @@ export default class Uploader extends Component {
             this.handleUploadProfilePictureSubmit.bind(this);
     }
     handleFileSelectForUploadPicture(e) {
-        console.log(e);
-        console.log(e.target.files[0]);
+        // console.log(e);
+        // console.log(e.target.files[0]);
         // this.setState({ fileToUpload: e.target.files[0] });
-        this.setState({ fileToUpload: e.target.files[0] });
-        // this.handleUploadProfilePictureSubmit();
-        console.log(this.state);
+        // this.setState({ fileToUpload: e.target.files[0] });
+        this.handleUploadProfilePictureSubmit(e.target.files[0]);
+        // console.log(this.state);
     }
-    handleUploadProfilePictureSubmit(e) {
-        e.preventDefault();
+    handleUploadProfilePictureSubmit(file) {
+        // e.preventDefault();
         const fd = new FormData();
-        fd.append("file", this.state.fileToUpload);
+        fd.append("file", file);
         fetch("/user/uploadprofilepicture", {
             method: "POST",
             body: fd,
@@ -70,9 +70,6 @@ export default class Uploader extends Component {
                                 width={100}
                             ></img>
                         </label>
-                        <button onClick={this.handleUploadProfilePictureSubmit}>
-                            SUBMIT
-                        </button>
                     </form>
                 </section>
             </div>

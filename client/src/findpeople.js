@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
 export default function FindPeople(props) {
+    const history = useHistory();
     const [search, setSearch] = useState("");
     const [users, setUsers] = useState([]);
 
@@ -47,7 +49,13 @@ export default function FindPeople(props) {
             <div className="foundpeople-container">
                 {users.map((user) => {
                     return (
-                        <div className="user-listing" key={user.id}>
+                        <div
+                            className="user-listing"
+                            key={user.id}
+                            onClick={() => {
+                                history.replace(`/user/${user.id}`);
+                            }}
+                        >
                             <img
                                 className="listing-img"
                                 src={

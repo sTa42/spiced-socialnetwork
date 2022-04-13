@@ -9,29 +9,40 @@ export default function OtherProfile(props) {
         fetch(`/users/find/${params.id}`)
             .then((resp) => resp.json())
             .then((data) => {
-                if (data.sameUser) {
-                    return history.replace("/");
+                if (data.success) {
+                    if (data.sameUser) {
+                        return history.replace("/");
+                    } else {
+                        return setUser(data.user);
+                    }
                 }
+
                 console.log(data);
-                setUser(data.user);
+
+                // history.push(location.pathname);
             })
             .catch((err) => {
-                console.log(err);
+                console.log("HERE??", err);
             });
     }, []);
     return (
-        <section className="profile-container">
-            <ProfilePic
-                first={user.firstname}
-                last={user.lastname}
-                imgurl={user.profilepic_url}
-                height={200}
-                width={200}
-            />
+        <>
+            {!user.id && <p>That user does not exist :(</p>}
+            {user.id && (
+                <section className="profile-container">
+                    <ProfilePic
+                        first={user.firstname}
+                        last={user.lastname}
+                        imgurl={user.profilepic_url}
+                        height={200}
+                        width={200}
+                    />
 
-            <div className="editProfileContainer">
-                <p>{user.bio}</p>
-            </div>
-        </section>
+                    <div className="editProfileContainer">
+                        <p>{user.bio}</p>
+                    </div>
+                </section>
+            )}
+        </>
     );
 }

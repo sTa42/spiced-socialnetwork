@@ -207,6 +207,10 @@ button:hover {
     flex-direction: column;
     width: 15em;
 }
+.user-listing:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
 .user-listing img {
     object-fit: cover;
     border-radius: 50%;
