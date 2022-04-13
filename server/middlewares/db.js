@@ -58,12 +58,18 @@ exports.updateProfileBio = (userId, bio) => {
         [userId, bio]
     );
 };
-exports.getLatestUsers = () => {
-    return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 3;`);
-};
-exports.getUsersBySearch = (searchTerm) => {
+exports.getLatestUsers = (callerUserId) => {
     return db.query(
-        `SELECT * FROM users WHERE firstname ILIKE $1 OR lastname ILIKE $1;`,
-        [searchTerm + "%"]
+        `SELECT * FROM users WHERE id != $1 ORDER BY id DESC LIMIT 3;`,
+        [callerUserId]
     );
+};
+exports.getUsersBySearch = (searchTerm, callerUserId) => {
+    return db.query(
+        `SELECT * FROM users WHERE (firstname ILIKE $1 OR lastname ILIKE $1) AND id != $2;`,
+        [searchTerm + "%", callerUserId]
+    );
+};
+exports.getUserById = (userId) => {
+    return db.query(`SELECT * FROM users WHERE id = $1;`, [userId]);
 };

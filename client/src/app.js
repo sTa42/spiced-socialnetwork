@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import FindPeople from "./findpeople";
 import Logout from "./logout";
+import OtherProfile from "./otherprofile";
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -91,9 +92,7 @@ export default class App extends Component {
                             imgurl={this.state.user.profilepic_url}
                             first={this.state.user.firstname}
                             last={this.state.user.lastname}
-                            clickHandlerShowUploader={
-                                this.clickHandlerShowUploader
-                            }
+                            clickHandler={this.clickHandlerShowUploader}
                         />
                     </nav>
                     <section className="content">
@@ -101,13 +100,14 @@ export default class App extends Component {
                             <Profile
                                 user={this.state.user}
                                 updateBio={this.updateBio}
-                                clickHandlerShowUploader={
-                                    this.clickHandlerShowUploader
-                                }
+                                clickHandler={this.clickHandlerShowUploader}
                             />
                         </Route>
                         <Route path="/users">
                             <FindPeople />
+                        </Route>
+                        <Route exact path={"/user/:id"}>
+                            <OtherProfile />
                         </Route>
                         {this.state.showUploader && (
                             <Uploader

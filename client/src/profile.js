@@ -10,7 +10,7 @@ export default function Profile(props) {
                 imgurl={props.user.profilepic_url}
                 height={200}
                 width={200}
-                clickHandlerShowUploader={props.clickHandlerShowUploader}
+                clickHandler={props.clickHandler}
             />
 
             <div className="editProfileContainer">
