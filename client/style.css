@@ -23,6 +23,10 @@ main {
 }
 .authInput::placeholder {
     text-align: right;
+    margin-right: 0.5em;
+}
+.logo {
+    border-radius: 25%;
 }
 .authInput:focus {
     outline: none;
@@ -43,6 +47,11 @@ button:hover {
     justify-content: space-between;
     display: flex;
     width: 100%;
+}
+.close {
+    position: relative;
+    left: 50%;
+    top: -35px;
 }
 .close:hover {
     cursor: pointer;
@@ -226,6 +235,7 @@ button:hover {
 }
 .genericInput::placeholder {
     text-align: right;
+    margin-right: 0.5em;
 }
 .genericInput:focus {
     outline: none;
@@ -235,4 +245,33 @@ button:hover {
 .listing-img {
     height: 150px;
     width: 150px;
+}
+.friendButtons {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 200px;
+    align-items: center;
+}
+.genericButton {
+    border: 1px solid black;
+    border-radius: 25px;
+    background-color: lightcoral;
+    /* font-weight: bold; */
+    line-height: 1.3em;
+    font-size: 1.25em;
+    background-color: lightcoral;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.genericButton:hover {
+    outline: none;
+    border-color: lightblue;
+    box-shadow: 0 0 10px lightblue;
+}
+.genericButton:active {
+    position: relative;
+    left: 1px;
+    top: 1px;
 }

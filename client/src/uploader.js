@@ -41,14 +41,21 @@ export default class Uploader extends Component {
     render() {
         return (
             <div className="profileModal" style={{ border: "1px solid black" }}>
-                <img
+                {/* <img
                     className="close"
                     onClick={this.props.clickHandlerHideUploader}
                     src={"/close-button.png"}
                     height={50}
                     width={50}
-                ></img>
+                ></img> */}
                 <section className="pictureuploadmodal">
+                    <img
+                        className="close"
+                        onClick={this.props.clickHandlerHideUploader}
+                        src={"/close-button.png"}
+                        height={50}
+                        width={50}
+                    ></img>
                     {!this.state.err && (
                         <p>Do you want to change your profile picture?</p>
                     )}

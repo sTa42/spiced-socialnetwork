@@ -66,7 +66,7 @@ export default class BioEditor extends Component {
                                 value={this.state.biodraft}
                             ></textarea>
                             <button
-                                className="draftSave"
+                                className="genericButton"
                                 onClick={this.handleBioEditorSubmit}
                             >
                                 SAVE

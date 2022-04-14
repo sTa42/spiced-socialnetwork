@@ -31,20 +31,22 @@ export default function OtherProfile(props) {
         <>
             {!user.id && <p>That user does not exist :(</p>}
             {user.id && (
-                <section className="profile-container">
-                    <ProfilePic
-                        first={user.firstname}
-                        last={user.lastname}
-                        imgurl={user.profilepic_url}
-                        height={200}
-                        width={200}
-                    />
+                <>
+                    <section className="profile-container">
+                        <ProfilePic
+                            first={user.firstname}
+                            last={user.lastname}
+                            imgurl={user.profilepic_url}
+                            height={200}
+                            width={200}
+                        />
 
-                    <div className="editProfileContainer">
-                        <FriendshipButton otherUserId={user.id} />
-                        <p>{user.bio}</p>
-                    </div>
-                </section>
+                        <div className="editProfileContainer">
+                            <p>{user.bio}</p>
+                        </div>
+                    </section>
+                    <FriendshipButton otherUserId={user.id} />
+                </>
             )}
         </>
     );

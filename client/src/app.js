@@ -75,6 +75,7 @@ export default class App extends Component {
                 <BrowserRouter>
                     <nav className="navbar">
                         <img
+                            className="logo"
                             src="/idk-logos.jpeg"
                             width={100}
                             height={100}
