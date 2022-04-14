@@ -73,3 +73,37 @@ exports.getUsersBySearch = (searchTerm, callerUserId) => {
 exports.getUserById = (userId) => {
     return db.query(`SELECT * FROM users WHERE id = $1;`, [userId]);
 };
+exports.getFriendshipStatus = (sender, recipient) => {
+    return db.query(
+        `SELECT * 
+        FROM 
+        friendships 
+        WHERE 
+        (sender_id = $1 AND recipient_id = $2) 
+        OR 
+        (sender_id = $2 AND recipient_id = $1);`,
+        [sender, recipient]
+    );
+};
+exports.insertNewFriendshipRequest = (sender, recipient) => {
+    return db.query(
+        `INSERT INTO friendships (sender_id, recipient_id) VALUES ($1,$2) RETURNING sender_id, recipient_id;`,
+        [sender, recipient]
+    );
+};
+exports.acceptFriendRequest = (sender, recipient) => {
+    return db.query(
+        `UPDATE friendships SET status = true WHERE sender_id = $1 AND recipient_id = $2;`,
+        [sender, recipient]
+    );
+};
+exports.deleteFriendship = (sender, recipient) => {
+    return db.query(
+        `DELETE FROM friendships 
+        WHERE 
+        (sender_id = $1 AND recipient_id = $2) 
+        OR 
+        (sender_id = $2 AND recipient_id = $1);`,
+        [sender, recipient]
+    );
+};

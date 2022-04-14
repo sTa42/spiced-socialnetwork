@@ -9,6 +9,7 @@ const cookieSession = require("cookie-session");
 const authRouter = require("./routes/user");
 const passwordRouter = require("./routes/password");
 const usersRouter = require("./routes/users");
+const friendshipRouter = require("./routes/friendship");
 
 app.use(compression());
 app.use(express.json());
@@ -21,13 +22,10 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
-// app.use((req, res, next) => {
-//     console.log(req.body);
-//     next();
-// });
 app.use("/user", authRouter);
 app.use("/password", passwordRouter);
 app.use("/users", usersRouter);
+app.use("/friendship", friendshipRouter);
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

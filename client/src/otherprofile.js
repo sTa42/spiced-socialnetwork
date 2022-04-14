@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import ProfilePic from "./profilepic";
+import FriendshipButton from "./friendshipbutton";
+
 export default function OtherProfile(props) {
     const [user, setUser] = useState({});
     const params = useParams();
@@ -39,6 +41,7 @@ export default function OtherProfile(props) {
                     />
 
                     <div className="editProfileContainer">
+                        <FriendshipButton otherUserId={user.id} />
                         <p>{user.bio}</p>
                     </div>
                 </section>
