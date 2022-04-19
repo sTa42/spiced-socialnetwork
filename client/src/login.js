@@ -27,7 +27,7 @@ export default class Login extends Component {
             .then((data) => {
                 if (data.success) {
                     // <Redirect to="/"></Redirect>;
-                    this.history.replace("/");
+                    // this.history.replace("/");
                     location.reload();
                 } else {
                     this.setState({ error: data.message });

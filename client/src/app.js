@@ -119,6 +119,9 @@ export default class App extends Component {
                             />
                         )}
                     </section>
+                    <Route>
+                        <Redirect to="/"></Redirect>
+                    </Route>
                 </BrowserRouter>
             </>
         );
