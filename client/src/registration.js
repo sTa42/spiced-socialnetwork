@@ -48,7 +48,7 @@ export default class Registration extends Component {
     render() {
         return (
             <section>
-                <h1 className="someClass">Registration</h1>
+                <h1 className="authHeadline">Registration</h1>
                 {this.state.error && <h2>{this.state.error}</h2>}
                 <form className="authContainer">
                     <input
@@ -83,9 +83,16 @@ export default class Registration extends Component {
                         required
                         onChange={this.handleChange}
                     ></input>
-                    <button onClick={this.handleSubmit}>REGISTER</button>
+                    <button
+                        className="genericButton authButton"
+                        onClick={this.handleSubmit}
+                    >
+                        REGISTER
+                    </button>
                 </form>
-                <Link to="/login">ALREADY HAVE AN ACCOUNT? CLICK HERE</Link>
+                <Link to="/login" className="authlink">
+                    ALREADY HAVE AN ACCOUNT? CLICK HERE
+                </Link>
             </section>
         );
     }

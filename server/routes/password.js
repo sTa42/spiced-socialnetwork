@@ -51,6 +51,9 @@ router.post("/reset/verify", (req, res) => {
                                 "Something went bad on our side. Please try again later",
                         });
                     });
+            } else {
+                console.log("user tried to supply wrong reset codes");
+                return res.json({ success: false });
             }
         })
         .catch((err) => {

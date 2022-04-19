@@ -10,14 +10,21 @@ export default function Welcome() {
     //     </>
     // );
     return (
-        <>
+        <div className="authwrapper">
             <aside className="welcomeTextContainer">
-                <h1>WELCOME HERE</h1>
-                <p>idk network</p>
-                <img src="/idk-logos.jpeg" height={100} width={100}></img>
+                <img src="/idk-logos.jpeg" height={250} width={250}></img>
+                <h1 className="welcomeHeadline">Welcome to IDK networks</h1>
+                <p className="welcometext">
+                    You don&apos;t know anything?{" "}
+                    <strong>Then join now.</strong> Here you can follow people
+                    who will think for <strong>you</strong>, so you don&apos;t
+                    have to. Our members will only have the best intentions for
+                    you in mind. <br></br>
+                    <strong>Guaranteed.</strong>
+                </p>
             </aside>
             <BrowserRouter>
-                <div>
+                <section className="genericAuthContainer">
                     <Route exact path="/">
                         <Registration />
                     </Route>
@@ -27,8 +34,8 @@ export default function Welcome() {
                     <Route path="/reset">
                         <ResetPassword />
                     </Route>
-                </div>
+                </section>
             </BrowserRouter>
-        </>
+        </div>
     );
 }

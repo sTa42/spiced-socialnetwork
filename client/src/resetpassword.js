@@ -29,15 +29,26 @@ export default class ResetPassword extends Component {
             .then((data) => {
                 console.log("After Reset: ", data);
                 if (data.success) {
+                    this.setState({
+                        error: "",
+                    });
                     this.setState({ stage: 2 });
                 } else {
-                    this.setState({ errror: data.error });
+                    this.setState({
+                        error: "Something went wrong, please try again.",
+                    });
                 }
             })
-            .catch();
+            .catch((err) => {
+                console.log(err);
+                this.setState({
+                    error: "Something went wrong on our side, please try again later.",
+                });
+            });
     }
     handleResetCodeSubmit(e) {
         e.preventDefault();
+        console.log("USERS WANTS TO SUBMIT RESET CODE AND NEW PW");
         fetch("/password/reset/verify", {
             method: "POST",
             headers: {
@@ -49,11 +60,21 @@ export default class ResetPassword extends Component {
             .then((data) => {
                 console.log("DATA FROM CODE SUBMIT", data);
                 if (data.success) {
+                    this.setState({
+                        error: "",
+                    });
                     this.setState({ stage: 3 });
+                } else {
+                    this.setState({
+                        error: "Something went wrong, please try again.",
+                    });
                 }
             })
             .catch((err) => {
                 console.log(err);
+                this.setState({
+                    error: "Something went wrong on our side. Please try again later.",
+                });
             });
     }
     renderStage() {
@@ -61,7 +82,7 @@ export default class ResetPassword extends Component {
         if (this.state.stage === 1) {
             return (
                 <>
-                    <form>
+                    <form className="authContainer">
                         <input
                             key={1}
                             className="authInput"
@@ -71,16 +92,26 @@ export default class ResetPassword extends Component {
                             required
                             onChange={this.handleChangeResetPassword}
                         ></input>
-                        <button onClick={this.handleResetPasswordSubmit}>
+                        <button
+                            className="genericButton authButton"
+                            onClick={this.handleResetPasswordSubmit}
+                        >
                             RESET PASSWORD
                         </button>
                     </form>
+                    <Link to="/login" className="authlink">
+                        REMEMBER YOUR PASSWORD? CLICK HERE TO LOGIN
+                    </Link>
+                    <br></br>
+                    <Link to="/" className="authlink">
+                        NO ACCOUNT YET? CLICK HERE TO REGISTER
+                    </Link>
                 </>
             );
         } else if (this.state.stage === 2) {
             return (
                 <>
-                    <form>
+                    <form className="authContainer">
                         <input
                             key={2}
                             className="authInput"
@@ -99,7 +130,10 @@ export default class ResetPassword extends Component {
                             required
                             onChange={this.handleChangeResetPassword}
                         ></input>
-                        <button onClick={this.handleResetCodeSubmit}>
+                        <button
+                            className="genericButton authButton"
+                            onClick={this.handleResetCodeSubmit}
+                        >
                             CHANGE PASSWORD
                         </button>
                     </form>
@@ -108,13 +142,21 @@ export default class ResetPassword extends Component {
         } else if (this.state.stage === 3) {
             return (
                 <>
-                    <p>Password Change was successfull.</p>
-                    <Link to="/login">Click here to login</Link>
+                    <p>Password change was successfull.</p>
+                    <Link to="/login" className="authlink">
+                        Click here to login
+                    </Link>
                 </>
             );
         }
     }
     render() {
-        return <section>{this.renderStage()}</section>;
+        return (
+            <section>
+                <h1 className="authHeadline">Reset your password</h1>
+                {this.state.error && <h2>{this.state.error}</h2>}
+                {this.renderStage()}
+            </section>
+        );
     }
 }

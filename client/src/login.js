@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link, Redirect, Route } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 export default class Login extends Component {
     constructor() {
         super();
@@ -25,9 +26,9 @@ export default class Login extends Component {
             .then((resp) => resp.json())
             .then((data) => {
                 if (data.success) {
-                    location.reload();
-
                     // <Redirect to="/"></Redirect>;
+                    this.history.replace("/");
+                    location.reload();
                 } else {
                     this.setState({ error: data.message });
                 }
@@ -42,7 +43,7 @@ export default class Login extends Component {
     render() {
         return (
             <section>
-                <h1 className="someClass">LOGIN</h1>
+                <h1 className="authHeadline">Login</h1>
                 {this.state.error && <h2>{this.state.error}</h2>}
                 <form className="authContainer">
                     <input
@@ -61,11 +62,20 @@ export default class Login extends Component {
                         required
                         onChange={this.handleLoginChange}
                     ></input>
-                    <button onClick={this.handleLoginSubmit}>LOGIN</button>
+                    <button
+                        className="genericButton authButton"
+                        onClick={this.handleLoginSubmit}
+                    >
+                        LOGIN
+                    </button>
                 </form>
-                <Link to="/reset">CLICK HERE IF YOU FORGOT YOUR PASSWORD</Link>
+                <Link to="/reset" className="authlink">
+                    CLICK HERE IF YOU FORGOT YOUR PASSWORD
+                </Link>
                 <br></br>
-                <Link to="/">NO ACCOUNT YET? CLICK HERE</Link>
+                <Link to="/" className="authlink">
+                    NO ACCOUNT YET? CLICK HERE
+                </Link>
             </section>
         );
     }
