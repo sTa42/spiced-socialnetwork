@@ -315,3 +315,33 @@ button:hover {
     width: 10em;
     margin-bottom: 1em;
 }
+.friends-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+.friendSectionHeadline {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+.friendsSection-container {
+    /* margin-top: 2em; */
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    /* align-items: center; */
+    gap: 2em;
+}
+.inlinelink {
+    background: none;
+    border: none;
+    text-decoration: none;
+    /* line-height: 1.5em; */
+}
+.inlinelink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.inlinelink:visited {
+    color: black;
+}

@@ -42,6 +42,9 @@ export default function OtherProfile(props) {
                         />
 
                         <div className="editProfileContainer">
+                            <h1>
+                                {user.firstname} {user.lastname}
+                            </h1>
                             <p>{user.bio}</p>
                         </div>
                     </section>

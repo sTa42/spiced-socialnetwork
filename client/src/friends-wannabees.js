@@ -5,7 +5,11 @@ import {
     acceptFriend,
     deleteFriend,
 } from "./redux/friends/slice";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
+
 export default function FriendsAndWannaBees() {
+    const history = useHistory();
     const dispatch = useDispatch();
     const wannabees = useSelector(
         (state) =>
@@ -60,42 +64,101 @@ export default function FriendsAndWannaBees() {
     };
 
     return (
-        <section>
-            <h1>Your friends</h1>
-            {friends.map((friend) => {
-                return (
-                    <div key={friend.id}>
-                        {friend.firstname} {friend.lastname}
-                        Accept Me pls
-                        <button
-                            onClick={() => {
-                                // handleAccept(wannabee.id);
-                                handleFriendDelete(friend.id);
-                            }}
-                        >
-                            Hello Pls
-                        </button>
-                    </div>
-                );
-            })}
+        <section className="friends-container">
+            <div>
+                <h1 className="friendSectionHeadline">Your friends</h1>
+                {friends.length == 0 && (
+                    <p>
+                        You currently don&apos;t have any friends. Click{" "}
+                        <Link className="inlinelink" to="users">
+                            <strong>here</strong>
+                        </Link>{" "}
+                        to find some people to make friends with.
+                    </p>
+                )}
+                <div className="friendsSection-container">
+                    {friends.map((friend) => {
+                        return (
+                            <div
+                                className="user-listing"
+                                key={friend.id}
+                                onClick={() => {
+                                    history.replace(`/user/${friend.id}`);
+                                }}
+                            >
+                                <img
+                                    className="listing-img"
+                                    src={
+                                        friend.profilepic_url ||
+                                        "/blank-profilepic.svg"
+                                    }
+                                    height={150}
+                                    width={150}
+                                ></img>
+                                <p>
+                                    {friend.firstname} {friend.lastname}
+                                </p>
+                                <button
+                                    className="genericButton"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleFriendDelete(friend.id);
+                                    }}
+                                >
+                                    END FRIENDSHIP
+                                </button>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
 
-            <h1>Friend requests from other people</h1>
-            {wannabees.map((wannabee) => {
-                return (
-                    <div key={wannabee.id}>
-                        {wannabee.firstname} {wannabee.lastname}
-                        Accept Me pls
-                        <button
-                            onClick={() => {
-                                // handleAccept(wannabee.id);
-                                handleFriendAccept(wannabee.id);
-                            }}
-                        >
-                            Hello Pls
-                        </button>
-                    </div>
-                );
-            })}
+            <div>
+                <h1 className="friendSectionHeadline">
+                    Friend requests from other people
+                </h1>
+                {wannabees.length == 0 && (
+                    <p>
+                        You currently don&apos;t have any friend requests from
+                        other people.
+                    </p>
+                )}
+                <div className="friendsSection-container">
+                    {wannabees.map((wannabee) => {
+                        return (
+                            <div
+                                className="user-listing"
+                                key={wannabee.id}
+                                onClick={() => {
+                                    history.replace(`/user/${wannabee.id}`);
+                                }}
+                            >
+                                <img
+                                    className="listing-img"
+                                    src={
+                                        wannabee.profilepic_url ||
+                                        "/blank-profilepic.svg"
+                                    }
+                                    height={150}
+                                    width={150}
+                                ></img>
+                                <p>
+                                    {wannabee.firstname} {wannabee.lastname}
+                                </p>
+                                <button
+                                    className="genericButton"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleFriendAccept(wannabee.id);
+                                    }}
+                                >
+                                    ACCEPT FRIEND REQUEST
+                                </button>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </section>
     );
 }

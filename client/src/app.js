@@ -108,13 +108,13 @@ export default class App extends Component {
                                 clickHandler={this.clickHandlerShowUploader}
                             />
                         </Route>
-                        <Route path="/users">
+                        <Route exact path="/users">
                             <FindPeople />
                         </Route>
                         <Route exact path={"/user/:id"}>
                             <OtherProfile />
                         </Route>
-                        <Route path="/friends">
+                        <Route exact path="/friends">
                             <FriendsAndWannaBees />
                         </Route>
                         {this.state.showUploader && (
