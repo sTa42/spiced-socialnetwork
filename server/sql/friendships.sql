@@ -17,3 +17,6 @@ INSERT INTO friendships (sender_id, recipient_id, status) VALUES (206,3,true);
 INSERT INTO friendships (sender_id, recipient_id, status) VALUES (103,206,false);
 INSERT INTO friendships (sender_id, recipient_id, status) VALUES (101,206,false);
 INSERT INTO friendships (sender_id, recipient_id, status) VALUES (100,206,false);
+INSERT INTO friendships (sender_id, recipient_id, status) VALUES (206,150,false);
+INSERT INTO friendships (sender_id, recipient_id, status) VALUES (206,151,false);
+INSERT INTO friendships (sender_id, recipient_id, status) VALUES (206,152,false);

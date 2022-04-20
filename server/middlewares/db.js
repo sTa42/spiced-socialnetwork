@@ -117,3 +117,14 @@ exports.getFriendsAndWannabees = (userId) => {
         [userId]
     );
 };
+exports.getFriendsAndWannabees2 = (userId) => {
+    return db.query(
+        `SELECT users.id, firstname, lastname, profilepic_url, status, sender_id AS sender, recipient_id AS recipient, $1 AS requester 
+        FROM friendships JOIN users 
+        ON (status = false AND recipient_id = $1 AND sender_id = users.id)          
+        OR (status = true AND recipient_id = $1 AND sender_id = users.id) 
+        OR (status = true AND sender_id = $1 AND recipient_id = users.id) 
+        OR (status = false AND sender_id = $1 AND recipient_id = users.id)`,
+        [userId]
+    );
+};

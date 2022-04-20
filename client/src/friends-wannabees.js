@@ -14,17 +14,30 @@ export default function FriendsAndWannaBees() {
     const wannabees = useSelector(
         (state) =>
             state.FriendsAndWannaBees &&
-            state.FriendsAndWannaBees.filter((friendship) => !friendship.status)
+            state.FriendsAndWannaBees.filter(
+                (friendship) =>
+                    !friendship.status &&
+                    friendship.sender != friendship.requester
+            )
     );
     const friends = useSelector(
         (state) =>
             state.FriendsAndWannaBees &&
             state.FriendsAndWannaBees.filter((friendship) => friendship.status)
     );
+    const friendsWantToBeWith = useSelector(
+        (state) =>
+            state.FriendsAndWannaBees &&
+            state.FriendsAndWannaBees.filter(
+                (friendship) =>
+                    !friendship.status &&
+                    friendship.sender == friendship.requester
+            )
+    );
     useEffect(() => {
         // fetch friends data
         //once you have data, call dispatch, pass it an action to redux
-        fetch("/friendship/friendsAll")
+        fetch("/friendship/friendsAll2")
             .then((resp) => resp.json())
             .then((data) => {
                 console.log(data);
@@ -153,6 +166,52 @@ export default function FriendsAndWannaBees() {
                                     }}
                                 >
                                     ACCEPT FRIEND REQUEST
+                                </button>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+            <div>
+                <h1 className="friendSectionHeadline">
+                    Friend requests you made to
+                </h1>
+                {friendsWantToBeWith.length == 0 && (
+                    <p>
+                        You currently don&apos;t have any pending friend
+                        requests.
+                    </p>
+                )}
+                <div className="friendsSection-container">
+                    {friendsWantToBeWith.map((friendToBe) => {
+                        return (
+                            <div
+                                className="user-listing"
+                                key={friendToBe.id}
+                                onClick={() => {
+                                    history.replace(`/user/${friendToBe.id}`);
+                                }}
+                            >
+                                <img
+                                    className="listing-img"
+                                    src={
+                                        friendToBe.profilepic_url ||
+                                        "/blank-profilepic.svg"
+                                    }
+                                    height={150}
+                                    width={150}
+                                ></img>
+                                <p>
+                                    {friendToBe.firstname} {friendToBe.lastname}
+                                </p>
+                                <button
+                                    className="genericButton"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleFriendDelete(friendToBe.id);
+                                    }}
+                                >
+                                    CANCEL FRIEND REQUEST
                                 </button>
                             </div>
                         );
