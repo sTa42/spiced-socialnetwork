@@ -5,6 +5,7 @@ const {
     insertNewFriendshipRequest,
     acceptFriendRequest,
     deleteFriendship,
+    getFriendsAndWannabees,
 } = require("../middlewares/db");
 
 router.get("/status/:id", (req, res) => {
@@ -26,6 +27,18 @@ router.get("/status/:id", (req, res) => {
         .catch((err) => {
             console.log("ERROR GETTING FRIENDSHIP STATUS FROM DB:", err);
             res.json({ success: false, error: true });
+        });
+});
+router.get("/friendsAll", (req, res) => {
+    console.log(req.session.userId);
+    getFriendsAndWannabees(req.session.userId)
+        .then(({ rows }) => {
+            console.log(rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({ success: false });
         });
 });
 router.post("/make", (req, res) => {

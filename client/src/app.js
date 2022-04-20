@@ -12,6 +12,7 @@ import {
 import FindPeople from "./findpeople";
 import Logout from "./logout";
 import OtherProfile from "./otherprofile";
+import FriendsAndWannaBees from "./friends-wannabees";
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -87,6 +88,9 @@ export default class App extends Component {
                             <Link to="/users" className="navlink">
                                 FIND PEOPLE
                             </Link>
+                            <Link to="/friends" className="navlink">
+                                FRIENDS
+                            </Link>
                             <Logout />
                         </div>
                         <ProfilePic
@@ -110,6 +114,9 @@ export default class App extends Component {
                         <Route exact path={"/user/:id"}>
                             <OtherProfile />
                         </Route>
+                        <Route path="/friends">
+                            <FriendsAndWannaBees />
+                        </Route>
                         {this.state.showUploader && (
                             <Uploader
                                 updateProfilePicture={this.updateProfilePicture}
@@ -119,9 +126,9 @@ export default class App extends Component {
                             />
                         )}
                     </section>
-                    <Route>
+                    {/* <Route>
                         <Redirect to="/"></Redirect>
-                    </Route>
+                    </Route> */}
                 </BrowserRouter>
             </>
         );
