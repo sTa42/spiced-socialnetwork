@@ -14,7 +14,7 @@ main {
 .authContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
 .authInput {
     border: 1px solid black;
@@ -151,6 +151,7 @@ button:hover {
     margin-left: 1em;
 }
 .welcomeHeadline {
+    margin-top: 0.5em;
     font-size: 2em;
 }
 .welcometext {
@@ -164,6 +165,11 @@ button:hover {
 .welcomeContainer {
     margin-top: -5em;
     margin-right: 1em;
+}
+.preAuthLogo {
+    border-radius: 25%;
+    width: 250px;
+    height: 250px;
 }
 .file {
     width: 0.1px;
@@ -314,6 +320,8 @@ button:hover {
 .authButton {
     width: 10em;
     margin-bottom: 1em;
+    margin-left: 0.75em;
+    /* align-self: center; */
 }
 .friends-container {
     display: flex;

@@ -8,6 +8,7 @@ import {
     Link,
     Redirect,
     NavLink,
+    Switch,
 } from "react-router-dom";
 import FindPeople from "./findpeople";
 import Logout from "./logout";
@@ -101,34 +102,38 @@ export default class App extends Component {
                         />
                     </nav>
                     <section className="content">
-                        <Route exact path="/">
-                            <Profile
-                                user={this.state.user}
-                                updateBio={this.updateBio}
-                                clickHandler={this.clickHandlerShowUploader}
-                            />
-                        </Route>
-                        <Route exact path="/users">
-                            <FindPeople />
-                        </Route>
-                        <Route exact path={"/user/:id"}>
-                            <OtherProfile />
-                        </Route>
-                        <Route exact path="/friends">
-                            <FriendsAndWannaBees />
-                        </Route>
-                        {this.state.showUploader && (
-                            <Uploader
-                                updateProfilePicture={this.updateProfilePicture}
-                                clickHandlerHideUploader={
-                                    this.clickHandlerHideUploader
-                                }
-                            />
-                        )}
+                        <Switch>
+                            <Route exact path="/">
+                                <Profile
+                                    user={this.state.user}
+                                    updateBio={this.updateBio}
+                                    clickHandler={this.clickHandlerShowUploader}
+                                />
+                            </Route>
+                            <Route exact path="/users">
+                                <FindPeople />
+                            </Route>
+                            <Route exact path={"/user/:id"}>
+                                <OtherProfile />
+                            </Route>
+                            <Route exact path="/friends">
+                                <FriendsAndWannaBees />
+                            </Route>
+                            {this.state.showUploader && (
+                                <Uploader
+                                    updateProfilePicture={
+                                        this.updateProfilePicture
+                                    }
+                                    clickHandlerHideUploader={
+                                        this.clickHandlerHideUploader
+                                    }
+                                />
+                            )}
+                            <Route>
+                                <Redirect to="/"></Redirect>
+                            </Route>
+                        </Switch>
                     </section>
-                    {/* <Route>
-                        <Redirect to="/"></Redirect>
-                    </Route> */}
                 </BrowserRouter>
             </>
         );

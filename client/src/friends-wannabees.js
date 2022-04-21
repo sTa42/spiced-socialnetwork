@@ -111,15 +111,17 @@ export default function FriendsAndWannaBees() {
                                 <p>
                                     {friend.firstname} {friend.lastname}
                                 </p>
-                                <button
-                                    className="genericButton"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleFriendDelete(friend.id);
-                                    }}
-                                >
-                                    END FRIENDSHIP
-                                </button>
+                                <div className="friendButtons">
+                                    <button
+                                        className="genericButton"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleFriendDelete(friend.id);
+                                        }}
+                                    >
+                                        END FRIENDSHIP
+                                    </button>
+                                </div>
                             </div>
                         );
                     })}
@@ -158,15 +160,26 @@ export default function FriendsAndWannaBees() {
                                 <p>
                                     {wannabee.firstname} {wannabee.lastname}
                                 </p>
-                                <button
-                                    className="genericButton"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleFriendAccept(wannabee.id);
-                                    }}
-                                >
-                                    ACCEPT FRIEND REQUEST
-                                </button>
+                                <div className="friendButtons">
+                                    <button
+                                        className="genericButton"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleFriendAccept(wannabee.id);
+                                        }}
+                                    >
+                                        ACCEPT FRIEND REQUEST
+                                    </button>
+                                    <button
+                                        className="genericButton"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleFriendDelete(wannabee.id);
+                                        }}
+                                    >
+                                        REJECT FRIEND REQUEST
+                                    </button>
+                                </div>
                             </div>
                         );
                     })}
@@ -204,15 +217,17 @@ export default function FriendsAndWannaBees() {
                                 <p>
                                     {friendToBe.firstname} {friendToBe.lastname}
                                 </p>
-                                <button
-                                    className="genericButton"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleFriendDelete(friendToBe.id);
-                                    }}
-                                >
-                                    CANCEL FRIEND REQUEST
-                                </button>
+                                <div className="friendButtons">
+                                    <button
+                                        className="genericButton"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleFriendDelete(friendToBe.id);
+                                        }}
+                                    >
+                                        CANCEL FRIEND REQUEST
+                                    </button>
+                                </div>
                             </div>
                         );
                     })}

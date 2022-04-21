@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Registration from "./registration";
 import Login from "./login";
 import ResetPassword from "./resetpassword";
@@ -12,7 +12,12 @@ export default function Welcome() {
     return (
         <div className="authwrapper">
             <aside className="welcomeTextContainer">
-                <img src="/idk-logos.jpeg" height={250} width={250}></img>
+                <img
+                    src="/idk-logos.jpeg"
+                    height={250}
+                    width={250}
+                    className="preAuthLogo"
+                ></img>
                 <h1 className="welcomeHeadline">Welcome to IDK networks</h1>
                 <p className="welcometext">
                     You don&apos;t know anything?{" "}
@@ -25,15 +30,21 @@ export default function Welcome() {
             </aside>
             <BrowserRouter>
                 <section className="genericAuthContainer">
-                    <Route exact path="/">
-                        <Registration />
-                    </Route>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
-                    <Route path="/reset">
-                        <ResetPassword />
-                    </Route>
+                    <Switch>
+                        <Route exact path="/">
+                            <Registration />
+                        </Route>
+                        <Route exact path="/login">
+                            <Login />
+                        </Route>
+                        <Route exact path="/reset">
+                            <ResetPassword />
+                        </Route>
+
+                        <Route>
+                            <Redirect to="/"></Redirect>
+                        </Route>
+                    </Switch>
                 </section>
             </BrowserRouter>
         </div>
