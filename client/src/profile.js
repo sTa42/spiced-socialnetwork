@@ -11,6 +11,7 @@ export default function Profile(props) {
                 height={200}
                 width={200}
                 clickHandler={props.clickHandler}
+                class={"profilepic"}
             />
 
             <div className="editProfileContainer">

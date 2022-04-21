@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    receiveFriendsAndWannaBees,
-    acceptFriend,
-    deleteFriend,
     asyncReceiveFriendsAndWannaBees,
     asyncAcceptFriend,
     asyncDeleteFriend,
@@ -98,30 +95,31 @@ export default function FriendsAndWannaBees() {
                 <div className="friendsSection-container">
                     {friends.map((friend) => {
                         return (
-                            <div
-                                className="user-listing"
-                                key={friend.id}
-                                onClick={() => {
-                                    history.replace(`/user/${friend.id}`);
-                                }}
-                            >
-                                <img
-                                    className="listing-img"
-                                    src={
-                                        friend.profilepic_url ||
-                                        "/blank-profilepic.svg"
-                                    }
-                                    height={150}
-                                    width={150}
-                                ></img>
-                                <p>
-                                    {friend.firstname} {friend.lastname}
-                                </p>
+                            <div className="user-container" key={friend.id}>
+                                <div
+                                    className="user-listing"
+                                    key={friend.id}
+                                    onClick={() => {
+                                        history.replace(`/user/${friend.id}`);
+                                    }}
+                                >
+                                    <img
+                                        className="listing-img"
+                                        src={
+                                            friend.profilepic_url ||
+                                            "/blank-profilepic.svg"
+                                        }
+                                        height={150}
+                                        width={150}
+                                    ></img>
+                                    <p>
+                                        {friend.firstname} {friend.lastname}
+                                    </p>
+                                </div>
                                 <div className="friendButtons">
                                     <button
                                         className="genericButton"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
+                                        onClick={() => {
                                             handleFriendDelete(friend.id);
                                         }}
                                     >
@@ -147,30 +145,30 @@ export default function FriendsAndWannaBees() {
                 <div className="friendsSection-container">
                     {wannabees.map((wannabee) => {
                         return (
-                            <div
-                                className="user-listing"
-                                key={wannabee.id}
-                                onClick={() => {
-                                    history.replace(`/user/${wannabee.id}`);
-                                }}
-                            >
-                                <img
-                                    className="listing-img"
-                                    src={
-                                        wannabee.profilepic_url ||
-                                        "/blank-profilepic.svg"
-                                    }
-                                    height={150}
-                                    width={150}
-                                ></img>
-                                <p>
-                                    {wannabee.firstname} {wannabee.lastname}
-                                </p>
+                            <div className="user-container" key={wannabee.id}>
+                                <div
+                                    className="user-listing"
+                                    onClick={() => {
+                                        history.replace(`/user/${wannabee.id}`);
+                                    }}
+                                >
+                                    <img
+                                        className="listing-img"
+                                        src={
+                                            wannabee.profilepic_url ||
+                                            "/blank-profilepic.svg"
+                                        }
+                                        height={150}
+                                        width={150}
+                                    ></img>
+                                    <p>
+                                        {wannabee.firstname} {wannabee.lastname}
+                                    </p>
+                                </div>
                                 <div className="friendButtons">
                                     <button
                                         className="genericButton"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
+                                        onClick={() => {
                                             handleFriendAccept(wannabee.id);
                                         }}
                                     >
@@ -178,14 +176,14 @@ export default function FriendsAndWannaBees() {
                                     </button>
                                     <button
                                         className="genericButton"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
+                                        onClick={() => {
                                             handleFriendDelete(wannabee.id);
                                         }}
                                     >
                                         REJECT FRIEND REQUEST
                                     </button>
                                 </div>
+                                {/* </div> */}
                             </div>
                         );
                     })}
@@ -204,30 +202,33 @@ export default function FriendsAndWannaBees() {
                 <div className="friendsSection-container">
                     {friendsWantToBeWith.map((friendToBe) => {
                         return (
-                            <div
-                                className="user-listing"
-                                key={friendToBe.id}
-                                onClick={() => {
-                                    history.replace(`/user/${friendToBe.id}`);
-                                }}
-                            >
-                                <img
-                                    className="listing-img"
-                                    src={
-                                        friendToBe.profilepic_url ||
-                                        "/blank-profilepic.svg"
-                                    }
-                                    height={150}
-                                    width={150}
-                                ></img>
-                                <p>
-                                    {friendToBe.firstname} {friendToBe.lastname}
-                                </p>
+                            <div className="user-container" key={friendToBe.id}>
+                                <div
+                                    className="user-listing"
+                                    onClick={() => {
+                                        history.replace(
+                                            `/user/${friendToBe.id}`
+                                        );
+                                    }}
+                                >
+                                    <img
+                                        className="listing-img"
+                                        src={
+                                            friendToBe.profilepic_url ||
+                                            "/blank-profilepic.svg"
+                                        }
+                                        height={150}
+                                        width={150}
+                                    ></img>
+                                    <p>
+                                        {friendToBe.firstname}{" "}
+                                        {friendToBe.lastname}
+                                    </p>
+                                </div>
                                 <div className="friendButtons">
                                     <button
                                         className="genericButton"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
+                                        onClick={() => {
                                             handleFriendDelete(friendToBe.id);
                                         }}
                                     >

@@ -34,13 +34,15 @@ export default function friends(friends = [], action) {
 
 export function asyncReceiveFriendsAndWannaBees() {
     return async (dispatch) => {
-        const friends = await fetch("/friendship/friendsAll2").then(
-            (response) => response.json()
+        const data = await fetch("/friendship/friendsAll2").then((response) =>
+            response.json()
         );
-        dispatch({
-            type: "friends-wannabees/received",
-            payload: { friends },
-        });
+        if (data.success) {
+            dispatch({
+                type: "friends-wannabees/received",
+                payload: { friends: data.friends },
+            });
+        }
     };
 }
 export function asyncAcceptFriend(id) {

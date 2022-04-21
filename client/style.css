@@ -69,6 +69,10 @@ button:hover {
     border-color: lightblue;
     box-shadow: 0 0 10px lightblue;
 }
+.userpic {
+    border-radius: 50%;
+    object-fit: cover;
+}
 .profileModal {
     position: fixed;
     display: flex;
@@ -261,7 +265,7 @@ button:hover {
 }
 .user-listing:hover {
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.1);
+    /* background-color: rgba(0, 0, 0, 0.1); */
 }
 .user-listing img {
     object-fit: cover;
@@ -288,6 +292,7 @@ button:hover {
 .listing-img {
     height: 150px;
     width: 150px;
+    object-fit: cover;
 }
 .friendButtons {
     margin-top: 1em;
@@ -354,4 +359,9 @@ button:hover {
 }
 .inlinelink:visited {
     color: black;
+}
+.user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

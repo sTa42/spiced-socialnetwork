@@ -99,6 +99,7 @@ export default class App extends Component {
                             first={this.state.user.firstname}
                             last={this.state.user.lastname}
                             clickHandler={this.clickHandlerShowUploader}
+                            class={"profilepic"}
                         />
                     </nav>
                     <section className="content">
@@ -119,20 +120,19 @@ export default class App extends Component {
                             <Route exact path="/friends">
                                 <FriendsAndWannaBees />
                             </Route>
-                            {this.state.showUploader && (
-                                <Uploader
-                                    updateProfilePicture={
-                                        this.updateProfilePicture
-                                    }
-                                    clickHandlerHideUploader={
-                                        this.clickHandlerHideUploader
-                                    }
-                                />
-                            )}
+
                             <Route>
                                 <Redirect to="/"></Redirect>
                             </Route>
                         </Switch>
+                        {this.state.showUploader && (
+                            <Uploader
+                                updateProfilePicture={this.updateProfilePicture}
+                                clickHandlerHideUploader={
+                                    this.clickHandlerHideUploader
+                                }
+                            />
+                        )}
                     </section>
                 </BrowserRouter>
             </>

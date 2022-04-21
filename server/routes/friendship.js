@@ -47,7 +47,7 @@ router.get("/friendsAll2", (req, res) => {
     getFriendsAndWannabees2(req.session.userId)
         .then(({ rows: friends }) => {
             console.log(friends);
-            res.json(friends);
+            res.json({ success: true, friends });
         })
         .catch((err) => {
             console.log(err);
