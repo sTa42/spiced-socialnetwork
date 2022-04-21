@@ -22,12 +22,54 @@ export default function friends(friends = [], action) {
     return friends;
 }
 
-export function receiveFriendsAndWannaBees(friends) {
-    return { type: "friends-wannabees/received", payload: { friends } };
+// export function receiveFriendsAndWannaBees(friends) {
+//     return { type: "friends-wannabees/received", payload: { friends } };
+// }
+// export function acceptFriend(id) {
+//     return { type: "friends-wannabees/accepted", payload: { id } };
+// }
+// export function deleteFriend(id) {
+//     return { type: "friends-wannabees/deleted", payload: { id } };
+// }
+
+export function asyncReceiveFriendsAndWannaBees() {
+    return async (dispatch) => {
+        const friends = await fetch("/friendship/friendsAll2").then(
+            (response) => response.json()
+        );
+        dispatch({
+            type: "friends-wannabees/received",
+            payload: { friends },
+        });
+    };
 }
-export function acceptFriend(id) {
-    return { type: "friends-wannabees/accepted", payload: { id } };
+export function asyncAcceptFriend(id) {
+    return async (dispatch) => {
+        const data = await fetch("/friendship/accept", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ otherUserId: id }),
+        }).then((response) => response.json());
+        if (data.success) {
+            dispatch({
+                type: "friends-wannabees/accepted",
+                payload: { id },
+            });
+        }
+    };
 }
-export function deleteFriend(id) {
-    return { type: "friends-wannabees/deleted", payload: { id } };
+export function asyncDeleteFriend(id) {
+    return async (dispatch) => {
+        const data = await fetch("/friendship/reject", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ otherUserId: id }),
+        }).then((response) => response.json());
+        if (data.success) {
+            dispatch({
+                type: "friends-wannabees/deleted",
+                payload: { id },
+            });
+        }
+    };
 }

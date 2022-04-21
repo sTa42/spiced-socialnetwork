@@ -7,11 +7,13 @@ import * as immutableState from "redux-immutable-state-invariant";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import reducer from "./redux/reducer";
+import thunk from "redux-thunk";
 
 const store = createStore(
     reducer,
-    composeWithDevTools(applyMiddleware(immutableState.default()))
+    composeWithDevTools(applyMiddleware(immutableState.default(), thunk))
 );
+// console.log("THE THUNK: ", thunk);
 fetch("/user/id.json")
     .then((response) => response.json())
     .then((data) => {

@@ -4,6 +4,9 @@ import {
     receiveFriendsAndWannaBees,
     acceptFriend,
     deleteFriend,
+    asyncReceiveFriendsAndWannaBees,
+    asyncAcceptFriend,
+    asyncDeleteFriend,
 } from "./redux/friends/slice";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
@@ -37,43 +40,46 @@ export default function FriendsAndWannaBees() {
     useEffect(() => {
         // fetch friends data
         //once you have data, call dispatch, pass it an action to redux
-        fetch("/friendship/friendsAll2")
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log(data);
-                dispatch(receiveFriendsAndWannaBees(data));
-            })
-            .catch((err) => console.log(err));
+        // fetch("/friendship/friendsAll2")
+        //     .then((resp) => resp.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //         dispatch(receiveFriendsAndWannaBees(data));
+        //     })
+        //     .catch((err) => console.log(err));
+        dispatch(asyncReceiveFriendsAndWannaBees());
     }, []);
     const handleFriendAccept = (id) => {
-        fetch("/friendship/accept", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ otherUserId: id }),
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log(data);
-                if (data.success) {
-                    dispatch(acceptFriend(id));
-                }
-            })
-            .catch((err) => console.log(err));
+        // fetch("/friendship/accept", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({ otherUserId: id }),
+        // })
+        //     .then((resp) => resp.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //         if (data.success) {
+        //             dispatch(acceptFriend(id));
+        //         }
+        //     })
+        //     .catch((err) => console.log(err));
+        dispatch(asyncAcceptFriend(id));
     };
     const handleFriendDelete = (id) => {
-        fetch("/friendship/reject", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ otherUserId: id }),
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log(data);
-                if (data.success) {
-                    dispatch(deleteFriend(id));
-                }
-            })
-            .catch((err) => console.log(err));
+        // fetch("/friendship/reject", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({ otherUserId: id }),
+        // })
+        //     .then((resp) => resp.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //         if (data.success) {
+        //             dispatch(deleteFriend(id));
+        //         }
+        //     })
+        //     .catch((err) => console.log(err));
+        dispatch(asyncDeleteFriend(id));
     };
 
     return (

@@ -120,6 +120,7 @@ button:hover {
     color: black;
 }
 .authlink {
+    color: black;
     background: none;
     border: none;
     text-decoration: none;
@@ -341,6 +342,7 @@ button:hover {
     gap: 2em;
 }
 .inlinelink {
+    color: black;
     background: none;
     border: none;
     text-decoration: none;
