@@ -128,3 +128,37 @@ exports.getFriendsAndWannabees2 = (userId) => {
         [userId]
     );
 };
+
+exports.getLatestGeneralChatMessages = () => {
+    return db.query(
+        `SELECT generalchathistory.id AS id, users.id AS userId, generalchathistory.message,
+        users.firstname, users.lastname, users.profilepic_url FROM generalchathistory JOIN users 
+        ON generalchathistory.sender_id = users.id
+        ORDER BY timestamp DESC LIMIT 10;`
+    );
+};
+exports.addChatMessage = (sender, message) => {
+    return db.query(
+        `INSERT INTO generalchathistory (sender_id, message) VALUES ($1,$2) RETURNING *;`,
+        [sender, message]
+    );
+};
+exports.addChatMessage2 = (sender, message) => {
+    return db.query(
+        `WITH “user”
+        AS ( SELECT * FROM users WHERE id = $1),
+        new_message AS (INSERT INTO generalchathistory (sender_id, message) VALUES ($1, $2) RETURNING *)
+        SELECT firstname, lastname, profilepic_url FROM “user”, new_message`,
+        [sender, message]
+    );
+};
+exports.getUserData;
+// `INSERT INTO generalchathistory (sender_id, message) VALUES (35,'hello') SELECT * FROM users JOIN users ON generalchathistory.sender_id = users.id;`
+
+/*         `WITH “user”
+        AS ( SELECT * FROM users WHERE id = 14),
+        new_message AS (INSERT INTO generalchathistory (sender_id, message) VALUES (14, 'hello world nice') RETURNING id message, sender_id)
+        SELECT firstname, lastname, profilepic_url FROM “user”, new_message`,
+        [text, userId]
+
+        */

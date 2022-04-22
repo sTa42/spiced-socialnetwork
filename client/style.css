@@ -294,6 +294,12 @@ button:hover {
     width: 150px;
     object-fit: cover;
 }
+.chat-listing-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 .friendButtons {
     margin-top: 1em;
     display: flex;
@@ -364,4 +370,15 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.chat-messages-container {
+    border: 1px solid black;
+    height: 70vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.chat-message {
+    margin-left: 2em;
 }

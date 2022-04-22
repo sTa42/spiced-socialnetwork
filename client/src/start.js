@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import reducer from "./redux/reducer";
 import thunk from "redux-thunk";
 
+import { init } from "./socket.js";
 const store = createStore(
     reducer,
     composeWithDevTools(applyMiddleware(immutableState.default(), thunk))
@@ -21,6 +22,9 @@ fetch("/user/id.json")
         if (!data.userId) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
+            // Init WebSocket connection here
+            init(store);
+            console.log("connected");
             ReactDOM.render(
                 <Provider store={store}>
                     <App />
