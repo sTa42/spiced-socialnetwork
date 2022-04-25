@@ -12,7 +12,7 @@ export const init = (store) => {
 
     // listen to events
     socket.on("last-10-messages", (data) => {
-        // console.log("got last 10 messages", data);
+        console.log("got last 10 messages", data);
         store.dispatch(receiveGeneralChatMessages(data));
     });
     socket.on("newMessage", (data) => {

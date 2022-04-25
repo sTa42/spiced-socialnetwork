@@ -132,7 +132,7 @@ exports.getFriendsAndWannabees2 = (userId) => {
 exports.getLatestGeneralChatMessages = () => {
     return db.query(
         `SELECT generalchathistory.id AS id, users.id AS userId, generalchathistory.message,
-        users.firstname, users.lastname, users.profilepic_url FROM generalchathistory JOIN users 
+        users.firstname, users.lastname, users.profilepic_url, generalchathistory.timestamp FROM generalchathistory JOIN users 
         ON generalchathistory.sender_id = users.id
         ORDER BY timestamp DESC LIMIT 10;`
     );

@@ -9,6 +9,7 @@ const {
     getLatestGeneralChatMessages,
     addChatMessage,
     addChatMessage2,
+    getUserById,
 } = require("./middlewares/db.js");
 
 const server = require("http").Server(app);
@@ -69,12 +70,37 @@ io.on("connection", async function (socket) {
         socket.on("new-message-from-client", (data) => {
             console.log(data);
             // save to db and broadcast to everyone, get connected to user data
-            addChatMessage(userId, data.message)
-                .then(({ rows }) => {
-                    console.log(rows);
-                    io.emit("newMessage", { message: rows[0] });
+            Promise.all([
+                getUserById(userId),
+                addChatMessage(userId, data.message),
+            ])
+                .then((data) => {
+                    console.log(data);
+                    console.log(data[0].rows[0]);
+                    console.log(data[1].rows[0]);
+                    io.emit("newMessage", {
+                        message: {
+                            id: data[1].rows[0].id,
+                            userid: data[1].rows[0].sender_id,
+                            message: data[1].rows[0].message,
+                            timestamp: data[1].rows[0].timestamp,
+                            firstname: data[0].rows[0].firstname,
+                            lastname: data[0].rows[0].lastname,
+                            profilepic_url: data[0].rows[0].profilepic_url,
+                        },
+                    });
                 })
-                .catch();
+                .catch((err) => {
+                    console.log(err);
+                    io.emit("error", { error: "something went wrong" });
+                });
+
+            // addChatMessage(userId, data.message)
+            //     .then(({ rows }) => {
+            //         console.log(rows);
+            //         io.emit("newMessage", { message: rows[0] });
+            //     })
+            //     .catch();
         });
     }
 });

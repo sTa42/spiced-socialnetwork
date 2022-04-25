@@ -300,6 +300,10 @@ button:hover {
     border-radius: 50%;
     object-fit: cover;
 }
+.chat-listing-img:hover {
+    cursor: pointer;
+}
+
 .friendButtons {
     margin-top: 1em;
     display: flex;
@@ -337,7 +341,7 @@ button:hover {
 }
 .friends-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 3em;
 }
 .friendSectionHeadline {
@@ -372,13 +376,49 @@ button:hover {
     align-items: center;
 }
 .chat-messages-container {
+    background-color: whitesmoke;
+
+    margin-top: 1em;
     border: 1px solid black;
-    height: 70vh;
+    height: 60vh;
+    width: 50vw;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 1em;
 }
+
 .chat-message {
     margin-left: 2em;
+}
+.chat-message-header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+.chat-message:first-child {
+    margin-top: 1em;
+}
+.chat-message:last-child {
+    margin-bottom: 1em;
+}
+.chat-text {
+    font-size: 1.5em;
+    line-height: 2em;
+}
+
+.chat-composer {
+    border: 1px solid black;
+    /* height: 1.5em; */
+    width: 50vw;
+    resize: none;
+}
+.chat-composer::placeholder {
+    text-align: left;
+    margin-left: 0.5em;
+}
+.chat-composer:focus {
+    outline: none;
+    border-color: lightblue;
+    box-shadow: 0 0 10px lightblue;
 }
