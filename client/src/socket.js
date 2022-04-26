@@ -8,6 +8,11 @@ import {
     userOffline,
     userOnline,
 } from "./redux/onlineusers/slice";
+import {
+    receiveFriendRequests,
+    newFriendRequest,
+    removeFriendRequest,
+} from "./redux/friendnotification/slice";
 export let socket;
 export const init = (store) => {
     if (!socket) {
@@ -31,6 +36,18 @@ export const init = (store) => {
     socket.on("online-users-change-online", ({ userWentOnline }) => {
         console.log("SOCKET  JS ", userWentOnline);
         store.dispatch(userOnline(userWentOnline));
+    });
+    socket.on("open-friendship-requests", (data) => {
+        console.log("open friendship requests", data);
+        store.dispatch(receiveFriendRequests(data));
+    });
+    socket.on("new-friendship-request-client", ({ new_friendrequest }) => {
+        console.log("DATA FROM SERVER FRIENDREUQESt", new_friendrequest);
+        store.dispatch(newFriendRequest(new_friendrequest));
+    });
+    socket.on("remove-friendship-request-client", ({ sender }) => {
+        console.log("DATA FROM SERVER FRIENDREUQESt", sender);
+        store.dispatch(removeFriendRequest(sender));
     });
     socket.on("newMessage", (data) => {
         store.dispatch(sendNewMessage(data.message));

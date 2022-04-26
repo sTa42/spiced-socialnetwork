@@ -168,3 +168,15 @@ exports.getBasicUserData = (id) => {
         [id]
     );
 };
+exports.getOpenFriendshipRequests = (userId) => {
+    return db.query(
+        `SELECT friendships.id, friendships.sender_id, users.firstname, users.lastname, users.profilepic_url, friendships.status, friendships.timestamp FROM friendships JOIN users ON friendships.sender_id = users.id WHERE recipient_id = $1 AND status = false;`,
+        [userId]
+    );
+};
+exports.getSpecificFriendshipData = (recipient, sender) => {
+    return db.query(
+        `SELECT friendships.id, friendships.sender_id, users.firstname, users.lastname, users.profilepic_url, friendships.status, friendships.timestamp FROM friendships JOIN users ON friendships.sender_id = users.id WHERE recipient_id = $1 AND sender_id = $2 AND status = false;`,
+        [recipient, sender]
+    );
+};

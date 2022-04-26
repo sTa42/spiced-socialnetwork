@@ -11,6 +11,8 @@ const {
     addChatMessage2,
     getUserById,
     getBasicUserData,
+    getOpenFriendshipRequests,
+    getSpecificFriendshipData,
 } = require("./middlewares/db.js");
 
 const server = require("http").Server(app);
@@ -72,6 +74,7 @@ io.on("connection", (socket) => {
             const user = { sockets: [], data: {} };
             onlineUsers[userId] = user;
             onlineUsers[userId].sockets.push(socket.id);
+            socket.join(userId);
             getBasicUserData(userId)
                 .then(({ rows }) => {
                     console.log(rows);
@@ -97,19 +100,17 @@ io.on("connection", (socket) => {
 
         console.log(onlineUsers);
 
-        // getBasicUserData(userId)
-        //     .then(({ rows }) => {
-        //         console.log(rows);
-        //         onlineUsers[userId] = {
-        //             ...onlineUsers[userId],
-        //             data: rows[0],
-        //         };
-        //         console.log(onlineUsers);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         io.emit("error", { error: "something went wrong" });
-        //     });
+        getOpenFriendshipRequests(userId)
+            .then(({ rows }) => {
+                console.log(rows);
+                socket.emit("open-friendship-requests", {
+                    open_friendships: rows,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                socket.emit("error", { error: "something went wrong" });
+            });
         getLatestGeneralChatMessages()
             .then(({ rows }) => {
                 socket.emit("last-10-messages", {
@@ -121,6 +122,28 @@ io.on("connection", (socket) => {
                 socket.emit("error", { error: "something went wrong" });
             });
 
+        socket.on("new-friendship-make", (data) => {
+            console.log(userId, "wants to make with", data);
+            getSpecificFriendshipData(data.toUserId, userId)
+                .then(({ rows }) => {
+                    console.log("data make request", rows);
+
+                    io.in(data.toUserId).emit("new-friendship-request-client", {
+                        new_friendrequest: rows[0],
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+        socket.on("new-friendship-cancel", (data) => {
+            console.log(userId, "wants to cancel with ", data);
+            io.in(data.toUserId).emit("remove-friendship-request-client", {
+                sender: userId,
+                receiver: data.toUserId,
+                message: "no more friend",
+            });
+        });
         socket.on("new-message-from-client", (data) => {
             console.log(data);
             // save to db and broadcast to everyone, get connected to user data
@@ -160,6 +183,7 @@ io.on("connection", (socket) => {
                         return item;
                     }
                 });
+                socket.leave(userId);
             } else if (onlineUsers[userId].sockets.length == 1) {
                 // delete onlineUsers[]
                 // delete onlineUsers[userId].data;
@@ -170,6 +194,8 @@ io.on("connection", (socket) => {
                 //     onlineUsersForClient.push(onlineUsers[key].data);
                 // }
                 // socket.emit("online-users", { onlineUsersForClient });
+                socket.leave(userId);
+
                 socket.broadcast.emit("online-users-change-offline", {
                     userWentOffline: userId,
                 });

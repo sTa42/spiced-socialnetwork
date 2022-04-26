@@ -436,3 +436,10 @@ button:hover {
 .online-users {
     font-size: 0.5em;
 }
+.friendship-popup {
+    position: fixed;
+    right: 0;
+    top: 0;
+    border: 1px solid black;
+    background-color: white;
+}

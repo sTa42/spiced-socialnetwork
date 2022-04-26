@@ -16,6 +16,9 @@ import OtherProfile from "./otherprofile";
 import FriendsAndWannaBees from "./friends-wannabees";
 import GeneralChat from "./generalchat";
 import FindPeopleLink from "./findpeoplelink";
+import FriendsNavLink from "./friendsnavlink";
+import FriendshipNotification from "./friendshipnotification";
+import PrivateChat from "./privatechat";
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -77,6 +80,7 @@ export default class App extends Component {
         return (
             <>
                 <BrowserRouter>
+                    <FriendshipNotification />
                     <nav className="navbar">
                         <img
                             className="logo"
@@ -92,9 +96,10 @@ export default class App extends Component {
                                 FIND PEOPLE
                             </Link> */}
                             <FindPeopleLink />
-                            <Link to="/friends" className="navlink">
+                            <FriendsNavLink />
+                            {/* <Link to="/friends" className="navlink">
                                 FRIENDS
-                            </Link>
+                            </Link> */}
                             <Link to="/chat" className="navlink">
                                 CHAT
                             </Link>
@@ -122,6 +127,9 @@ export default class App extends Component {
                             </Route>
                             <Route exact path={"/user/:id"}>
                                 <OtherProfile />
+                            </Route>
+                            <Route exact path={"/user/:id/chat"}>
+                                <PrivateChat />
                             </Route>
                             <Route exact path="/friends">
                                 <FriendsAndWannaBees />

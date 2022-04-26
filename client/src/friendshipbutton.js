@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { socket } from "./socket.js";
 
 export default function FriendshipButton(props) {
     console.log("FIRNEDSHIP BUTON GOT MOUNTED with: ", props);
@@ -25,12 +26,18 @@ export default function FriendshipButton(props) {
 
                 if (data.success) {
                     if (buttonname == "MAKE") {
+                        socket.emit("new-friendship-make", {
+                            toUserId: props.otherUserId,
+                        });
                         setFriendShipStatus("CANCEL");
                     } else if (
                         buttonname == "END" ||
                         buttonname == "REJECT" ||
                         buttonname == "CANCEL"
                     ) {
+                        socket.emit("new-friendship-cancel", {
+                            toUserId: props.otherUserId,
+                        });
                         setFriendShipStatus("");
                     } else if (buttonname == "ACCEPT") {
                         setFriendShipStatus("END");
