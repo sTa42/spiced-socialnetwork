@@ -152,7 +152,7 @@ exports.addChatMessage2 = (sender, message) => {
         [sender, message]
     );
 };
-exports.getUserData;
+// exports.getUserData;
 // `INSERT INTO generalchathistory (sender_id, message) VALUES (35,'hello') SELECT * FROM users JOIN users ON generalchathistory.sender_id = users.id;`
 
 /*         `WITH “user”
@@ -162,3 +162,9 @@ exports.getUserData;
         [text, userId]
 
         */
+exports.getBasicUserData = (id) => {
+    return db.query(
+        `SELECT id, firstname, lastname, profilepic_url FROM users WHERE id = $1`,
+        [id]
+    );
+};

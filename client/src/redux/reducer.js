@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import friendsReducer from "./friends/slice";
 import generalChatMessagesReducer from "./generalchat/slice";
+import onlineUsersReducer from "./onlineusers/slice";
 
 const rootReducer = combineReducers({
     FriendsAndWannaBees: friendsReducer,
     GeneralChatMessages: generalChatMessagesReducer,
+    OnlineUsers: onlineUsersReducer,
 });
 
 export default rootReducer;

@@ -245,18 +245,21 @@ button:hover {
 .findpeople-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
+    /* max-width: 70vw;
+    margin: 0 auto; */
+    gap: 4em;
 }
+
 .foundpeople-container {
     margin-top: 2em;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /* justify-content: center; */
     /* align-items: center; */
     gap: 2em;
 }
-
 .user-listing {
     display: flex;
     align-items: center;
@@ -279,6 +282,14 @@ button:hover {
 .genericInput {
     border: 1px solid black;
     height: 1.5em;
+}
+.searchUserInput {
+    width: 15em;
+    height: 2em;
+}
+.searchHeading {
+    font-size: 2em;
+    margin-bottom: 0.5em;
 }
 .genericInput::placeholder {
     text-align: right;
@@ -341,7 +352,7 @@ button:hover {
 }
 .friends-container {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 3em;
 }
 .friendSectionHeadline {
@@ -421,4 +432,7 @@ button:hover {
     outline: none;
     border-color: lightblue;
     box-shadow: 0 0 10px lightblue;
+}
+.online-users {
+    font-size: 0.5em;
 }

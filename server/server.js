@@ -10,6 +10,7 @@ const {
     addChatMessage,
     addChatMessage2,
     getUserById,
+    getBasicUserData,
 } = require("./middlewares/db.js");
 
 const server = require("http").Server(app);
@@ -51,21 +52,74 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
-io.on("connection", async function (socket) {
-    console.log("NEW CONNECTION ESTABLIESHED");
+const onlineUsers = {};
+io.on("connection", (socket) => {
+    console.log("NEW CONNECTION ESTABLIESHED wit: ", socket.id);
     const userId = socket.request.session.userId;
     console.log(userId);
     // send last message
     // db call here
     // check if userId
     if (userId) {
+        const onlineUsersForClient = [];
+        for (const key in onlineUsers) {
+            if (key != userId) {
+                onlineUsersForClient.push(onlineUsers[key].data);
+            }
+        }
+        socket.emit("online-users", { onlineUsersForClient });
+        if (!onlineUsers[userId]) {
+            const user = { sockets: [], data: {} };
+            onlineUsers[userId] = user;
+            onlineUsers[userId].sockets.push(socket.id);
+            getBasicUserData(userId)
+                .then(({ rows }) => {
+                    console.log(rows);
+                    onlineUsers[userId] = {
+                        ...onlineUsers[userId],
+                        data: rows[0],
+                    };
+                    console.log(onlineUsers);
+                    // io.emit("online-users-change-online", {
+                    //     userWentOnline: rows[0],
+                    // });
+                    socket.broadcast.emit("online-users-change-online", {
+                        userWentOnline: rows[0],
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    io.emit("error", { error: "something went wrong" });
+                });
+        } else {
+            onlineUsers[userId].sockets.push(socket.id);
+        }
+
+        console.log(onlineUsers);
+
+        // getBasicUserData(userId)
+        //     .then(({ rows }) => {
+        //         console.log(rows);
+        //         onlineUsers[userId] = {
+        //             ...onlineUsers[userId],
+        //             data: rows[0],
+        //         };
+        //         console.log(onlineUsers);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         io.emit("error", { error: "something went wrong" });
+        //     });
         getLatestGeneralChatMessages()
             .then(({ rows }) => {
                 socket.emit("last-10-messages", {
                     messages: rows,
                 });
             })
-            .catch();
+            .catch((err) => {
+                console.log(err);
+                socket.emit("error", { error: "something went wrong" });
+            });
 
         socket.on("new-message-from-client", (data) => {
             console.log(data);
@@ -94,13 +148,37 @@ io.on("connection", async function (socket) {
                     console.log(err);
                     io.emit("error", { error: "something went wrong" });
                 });
+        });
+        socket.on("disconnect", () => {
+            console.log(socket.id, "just dced");
+            if (onlineUsers[userId].sockets.length > 1) {
+                onlineUsers[userId].sockets = onlineUsers[
+                    userId
+                ].sockets.filter((item) => {
+                    console.log(item, socket.id);
+                    if (item != socket.id) {
+                        return item;
+                    }
+                });
+            } else if (onlineUsers[userId].sockets.length == 1) {
+                // delete onlineUsers[]
+                // delete onlineUsers[userId].data;
+                // delete onlineUsers[userId].sockets;
+                delete onlineUsers[userId];
+                // const onlineUsersForClient = [];
+                // for (const key in onlineUsers) {
+                //     onlineUsersForClient.push(onlineUsers[key].data);
+                // }
+                // socket.emit("online-users", { onlineUsersForClient });
+                socket.broadcast.emit("online-users-change-offline", {
+                    userWentOffline: userId,
+                });
+                // io.emit("online-users-change-offline", {
+                //     userWentOffline: userId,
+                // });
+            }
 
-            // addChatMessage(userId, data.message)
-            //     .then(({ rows }) => {
-            //         console.log(rows);
-            //         io.emit("newMessage", { message: rows[0] });
-            //     })
-            //     .catch();
+            console.log("AFTER DC", onlineUsers);
         });
     }
 });

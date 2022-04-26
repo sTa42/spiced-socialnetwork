@@ -15,6 +15,7 @@ import Logout from "./logout";
 import OtherProfile from "./otherprofile";
 import FriendsAndWannaBees from "./friends-wannabees";
 import GeneralChat from "./generalchat";
+import FindPeopleLink from "./findpeoplelink";
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -87,9 +88,10 @@ export default class App extends Component {
                             <Link to="/" className="navlink">
                                 HOME
                             </Link>
-                            <Link to="/users" className="navlink">
+                            {/* <Link to="/users" className="navlink">
                                 FIND PEOPLE
-                            </Link>
+                            </Link> */}
+                            <FindPeopleLink />
                             <Link to="/friends" className="navlink">
                                 FRIENDS
                             </Link>
