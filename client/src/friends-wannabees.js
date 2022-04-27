@@ -5,12 +5,20 @@ import {
     asyncAcceptFriend,
     asyncDeleteFriend,
 } from "./redux/friends/slice";
+import { removeFriendRequest } from "./redux/friendnotification/slice";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
 export default function FriendsAndWannaBees() {
     const history = useHistory();
     const dispatch = useDispatch();
+    const friendNotifications = useSelector(
+        (state) =>
+            state.FriendNotifications &&
+            state.FriendNotifications.filter((friendship) => {
+                return !friendship.seen;
+            })
+    );
     const wannabees = useSelector(
         (state) =>
             state.FriendsAndWannaBees &&
@@ -60,7 +68,9 @@ export default function FriendsAndWannaBees() {
         //         }
         //     })
         //     .catch((err) => console.log(err));
+
         dispatch(asyncAcceptFriend(id));
+        dispatch(removeFriendRequest(id));
     };
     const handleFriendDelete = (id) => {
         // fetch("/friendship/reject", {
@@ -77,6 +87,7 @@ export default function FriendsAndWannaBees() {
         //     })
         //     .catch((err) => console.log(err));
         dispatch(asyncDeleteFriend(id));
+        dispatch(removeFriendRequest(id));
     };
 
     return (
@@ -86,7 +97,7 @@ export default function FriendsAndWannaBees() {
                 {friends.length == 0 && (
                     <p>
                         You currently don&apos;t have any friends. Click{" "}
-                        <Link className="inlinelink" to="users">
+                        <Link className="inlinelink" to="/users">
                             <strong>here</strong>
                         </Link>{" "}
                         to find some people to make friends with.
@@ -124,6 +135,16 @@ export default function FriendsAndWannaBees() {
                                         }}
                                     >
                                         END FRIENDSHIP
+                                    </button>
+                                    <button
+                                        className="genericButton"
+                                        onClick={() => {
+                                            history.replace(
+                                                `/user/${friend.id}/chat`
+                                            );
+                                        }}
+                                    >
+                                        SEND MESSAGE
                                     </button>
                                 </div>
                             </div>

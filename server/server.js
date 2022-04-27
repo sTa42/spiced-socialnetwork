@@ -13,6 +13,9 @@ const {
     getBasicUserData,
     getOpenFriendshipRequests,
     getSpecificFriendshipData,
+    getPrivateMessageData,
+    addPrivateMessage,
+    getFriendshipStatus,
 } = require("./middlewares/db.js");
 
 const server = require("http").Server(app);
@@ -56,9 +59,9 @@ server.listen(process.env.PORT || 3001, function () {
 
 const onlineUsers = {};
 io.on("connection", (socket) => {
-    console.log("NEW CONNECTION ESTABLIESHED wit: ", socket.id);
+    // console.log("NEW CONNECTION ESTABLIESHED wit: ", socket.id);
     const userId = socket.request.session.userId;
-    console.log(userId);
+    // console.log(userId);
     // send last message
     // db call here
     // check if userId
@@ -82,7 +85,7 @@ io.on("connection", (socket) => {
                         ...onlineUsers[userId],
                         data: rows[0],
                     };
-                    console.log(onlineUsers);
+                    // console.log(onlineUsers);
                     // io.emit("online-users-change-online", {
                     //     userWentOnline: rows[0],
                     // });
@@ -96,9 +99,10 @@ io.on("connection", (socket) => {
                 });
         } else {
             onlineUsers[userId].sockets.push(socket.id);
+            socket.join(userId);
         }
 
-        console.log(onlineUsers);
+        // console.log(onlineUsers);
 
         getOpenFriendshipRequests(userId)
             .then(({ rows }) => {
@@ -172,13 +176,135 @@ io.on("connection", (socket) => {
                     io.emit("error", { error: "something went wrong" });
                 });
         });
+
+        socket.on("get-latest-private-messages-for-user", (data) => {
+            console.log(userId, " I want to chat with: ", data);
+            // getFriendshipStatus(userId, data.userToChatWith)
+            //     .then(({ rows }) => {
+            //         console.log(rows);
+            //         if (rows.length != 0 && rows[0].status) {
+            //             console.log("in here?");
+            //             getPrivateMessageData(userId, data.userToChatWith)
+            //                 .then(({ rows }) => {
+            //                     console.log(rows.length);
+            //                     io.in(userId).emit("latest-messages-for-user", {
+            //                         rows,
+            //                     });
+            //                 })
+            //                 .catch((err) => {
+            //                     console.log(err);
+            //                 });
+            //         } else {
+            //             io.in(userId).emit("error", { error: "no friends" });
+            //         }
+            //     })
+            //     .catch((err) => {
+            //         console.log(err);
+            //     });
+            Promise.all([
+                getFriendshipStatus(userId, data.userToChatWith),
+                getBasicUserData(data.userToChatWith),
+                getPrivateMessageData(userId, data.userToChatWith),
+            ])
+                .then((data) => {
+                    // console.log("PROMISE ALL", data);
+                    console.log("PROMISE ALL", data[0].rows);
+                    console.log("PROMISE ALL", data[1].rows);
+                    // console.log("PROMISE ALL", data[2].rows);
+                    if (data[0].rows.length != 0 && data[0].rows[0].status) {
+                        // io.in(userId)
+                        socket.emit("latest-messages-for-user", {
+                            rows: data[2].rows,
+                            sender: onlineUsers[userId].data,
+                            recipient: data[1].rows[0],
+                        });
+                    } else {
+                        socket.emit("error", { error: "no friends" });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    socket.emit("error", { error: "no friends" });
+                });
+        });
+        socket.on("add-private-message-for-user", (data) => {
+            console.log("Add this ", data);
+
+            getFriendshipStatus(userId, data.userToChatWith)
+                .then(({ rows }) => {
+                    if (rows.length != 0 && rows[0].status) {
+                        // io.in(userId)
+                        addPrivateMessage(
+                            userId,
+                            data.userToChatWith,
+                            data.message
+                        )
+                            .then(({ rows }) => {
+                                console.log(rows);
+                                console.log(userId, data.userToChatWith);
+                                io.in(userId).emit("new-messages-for-user", {
+                                    newMessage: rows[0],
+                                });
+                                if (
+                                    Object.prototype.hasOwnProperty.call(
+                                        onlineUsers,
+                                        data.userToChatWith
+                                    )
+                                ) {
+                                    console.log("they are online");
+                                    io.in(parseInt(data.userToChatWith)).emit(
+                                        "new-messages-for-user",
+                                        {
+                                            newMessage: rows[0],
+                                        }
+                                    );
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                    } else {
+                        socket.emit("error", { error: "no friends" });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            // addPrivateMessage(userId, data.userToChatWith, data.message)
+            //     .then(({ rows }) => {
+            //         console.log(rows);
+            //         console.log(userId, data.userToChatWith);
+            //         io.in(userId).emit("new-messages-for-user", {
+            //             newMessage: rows[0],
+            //         });
+            //         if (
+            //             Object.prototype.hasOwnProperty.call(
+            //                 onlineUsers,
+            //                 data.userToChatWith
+            //             )
+            //         ) {
+            //             console.log("they are online");
+            //             io.in(parseInt(data.userToChatWith)).emit(
+            //                 "new-messages-for-user",
+            //                 {
+            //                     newMessage: rows[0],
+            //                 }
+            //             );
+            //         }
+            //     })
+            //     .catch((err) => {
+            //         console.log(err);
+            //     });
+        });
+
         socket.on("disconnect", () => {
             console.log(socket.id, "just dced");
             if (onlineUsers[userId].sockets.length > 1) {
                 onlineUsers[userId].sockets = onlineUsers[
                     userId
                 ].sockets.filter((item) => {
-                    console.log(item, socket.id);
+                    // console.log(item, socket.id);
                     if (item != socket.id) {
                         return item;
                     }
@@ -204,7 +330,7 @@ io.on("connection", (socket) => {
                 // });
             }
 
-            console.log("AFTER DC", onlineUsers);
+            // console.log("AFTER DC", onlineUsers);
         });
     }
 });

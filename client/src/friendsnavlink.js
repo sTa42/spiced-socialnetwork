@@ -5,6 +5,15 @@ export default function FriendsNavLink() {
     const friendNotifications = useSelector(
         (state) => state.FriendNotifications
     );
+    const wannabees = useSelector(
+        (state) =>
+            state.FriendsAndWannaBees &&
+            state.FriendsAndWannaBees.filter(
+                (friendship) =>
+                    !friendship.status &&
+                    friendship.sender != friendship.requester
+            )
+    );
     // console.log(friendNotifications);
 
     return (
