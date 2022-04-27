@@ -219,7 +219,11 @@ io.on("connection", (socket) => {
                             recipient: data[1].rows[0],
                         });
                     } else {
-                        socket.emit("error", { error: "no friends" });
+                        socket.emit("error", {
+                            error: "no friends",
+                            firstname: data[1].rows[0].firstname,
+                            lastname: data[1].rows[0].lastname,
+                        });
                     }
                 })
                 .catch((err) => {

@@ -45,7 +45,7 @@ export default function PrivateChat() {
     });
     socket.on("error", (data) => {
         console.log(data);
-        setError(data.error);
+        setError(data);
     });
 
     const sendMessage = () => {
@@ -67,7 +67,11 @@ export default function PrivateChat() {
     return (
         <>
             {" "}
-            {error && <p>No friends</p>}
+            {error && (
+                <p>
+                    You are not friends with {error.firstname} {error.lastname}
+                </p>
+            )}
             {!error && (
                 <>
                     {" "}
